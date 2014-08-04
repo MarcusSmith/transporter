@@ -52,8 +52,8 @@
         [root addChild:title];
     }
     
-    if (self.description) {
-        NSXMLElement *description = [[NSXMLElement alloc] initWithName:@"description" stringValue:self.description];
+    if (self.localDescription) {
+        NSXMLElement *description = [[NSXMLElement alloc] initWithName:@"description" stringValue:self.localDescription];
         [root addChild:description];
     }
     

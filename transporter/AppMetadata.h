@@ -21,4 +21,6 @@
 - (id)initWithXML:(NSURL *)xmlURL;
 - (NSXMLDocument *)NSXMLDocumentRepresentation;
 
+- (id)initWithXMLData:(NSData *)data;
+
 @end

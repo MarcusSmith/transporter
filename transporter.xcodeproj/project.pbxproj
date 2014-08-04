@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		410F73A019902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F739D19902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m */; };
+		410F73A119902A09007E8958 /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F739F19902A09007E8958 /* UIView+CompactConstraint.m */; };
+		410F73A419902A2D007E8958 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410F73A319902A2D007E8958 /* MainMenu.xib */; };
+		410F73AA19902A42007E8958 /* MALabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73A719902A42007E8958 /* MALabel.m */; };
+		410F73AB19902A42007E8958 /* MATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73A919902A42007E8958 /* MATextField.m */; };
+		410F73B319902A7E007E8958 /* AppMetaDataWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */; };
+		410F73B419902A7E007E8958 /* MALocaleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B019902A7E007E8958 /* MALocaleViewController.m */; };
+		410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */; };
+		410F73BA19902B12007E8958 /* AppMetadataDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B919902B12007E8958 /* AppMetadataDocument.m */; };
 		4519B9F11982EF7B00D30FC9 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* Version.m */; };
 		4533A05F1982A08E0082C746 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A05E1982A08E0082C746 /* MainViewController.m */; };
 		458AAA4B19706F2D001A2AA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AAA4A19706F2D001A2AA1 /* Cocoa.framework */; };
@@ -40,6 +49,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		410F739B19902A09007E8958 /* CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompactConstraint.h; sourceTree = "<group>"; };
+		410F739C19902A09007E8958 /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
+		410F739D19902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
+		410F739E19902A09007E8958 /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CompactConstraint.h"; sourceTree = "<group>"; };
+		410F739F19902A09007E8958 /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CompactConstraint.m"; sourceTree = "<group>"; };
+		410F73A319902A2D007E8958 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		410F73A619902A42007E8958 /* MALabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALabel.h; sourceTree = "<group>"; };
+		410F73A719902A42007E8958 /* MALabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALabel.m; sourceTree = "<group>"; };
+		410F73A819902A42007E8958 /* MATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATextField.h; sourceTree = "<group>"; };
+		410F73A919902A42007E8958 /* MATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATextField.m; sourceTree = "<group>"; };
+		410F73AD19902A7E007E8958 /* AppMetaDataWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetaDataWindowController.h; sourceTree = "<group>"; };
+		410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetaDataWindowController.m; sourceTree = "<group>"; };
+		410F73AF19902A7E007E8958 /* MALocaleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALocaleViewController.h; sourceTree = "<group>"; };
+		410F73B019902A7E007E8958 /* MALocaleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALocaleViewController.m; sourceTree = "<group>"; };
+		410F73B119902A7E007E8958 /* MAScreenshotsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAScreenshotsViewController.h; sourceTree = "<group>"; };
+		410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAScreenshotsViewController.m; sourceTree = "<group>"; };
+		410F73B619902AD0007E8958 /* transporter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "transporter-Info.plist"; sourceTree = "<group>"; };
+		410F73B819902B12007E8958 /* AppMetadataDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetadataDocument.h; sourceTree = "<group>"; };
+		410F73B919902B12007E8958 /* AppMetadataDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetadataDocument.m; sourceTree = "<group>"; };
 		4519B9EF1982EF7B00D30FC9 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		4519B9F01982EF7B00D30FC9 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
 		4533A05D1982A08E0082C746 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -49,7 +77,6 @@
 		458AAA4D19706F2D001A2AA1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		458AAA4E19706F2D001A2AA1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		458AAA4F19706F2D001A2AA1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		458AAA5219706F2D001A2AA1 /* transporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "transporter-Info.plist"; sourceTree = "<group>"; };
 		458AAA5419706F2D001A2AA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		458AAA5619706F2D001A2AA1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		458AAA5819706F2D001A2AA1 /* transporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "transporter-Prefix.pch"; sourceTree = "<group>"; };
@@ -101,6 +128,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		410F7399199029FB007E8958 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				410F739A19902A09007E8958 /* CompactConstraint */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		410F739A19902A09007E8958 /* CompactConstraint */ = {
+			isa = PBXGroup;
+			children = (
+				410F739B19902A09007E8958 /* CompactConstraint.h */,
+				410F739C19902A09007E8958 /* NSLayoutConstraint+CompactConstraint.h */,
+				410F739D19902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m */,
+				410F739E19902A09007E8958 /* UIView+CompactConstraint.h */,
+				410F739F19902A09007E8958 /* UIView+CompactConstraint.m */,
+			);
+			path = CompactConstraint;
+			sourceTree = "<group>";
+		};
+		410F73A219902A22007E8958 /* NiBs */ = {
+			isa = PBXGroup;
+			children = (
+				410F73A319902A2D007E8958 /* MainMenu.xib */,
+			);
+			name = NiBs;
+			sourceTree = "<group>";
+		};
+		410F73A519902A34007E8958 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				410F73A619902A42007E8958 /* MALabel.h */,
+				410F73A719902A42007E8958 /* MALabel.m */,
+				410F73A819902A42007E8958 /* MATextField.h */,
+				410F73A919902A42007E8958 /* MATextField.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		410F73AC19902A55007E8958 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				410F73AD19902A7E007E8958 /* AppMetaDataWindowController.h */,
+				410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */,
+				410F73AF19902A7E007E8958 /* MALocaleViewController.h */,
+				410F73B019902A7E007E8958 /* MALocaleViewController.m */,
+				410F73B119902A7E007E8958 /* MAScreenshotsViewController.h */,
+				410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		458AAA3E19706F2D001A2AA1 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +222,10 @@
 		458AAA5019706F2D001A2AA1 /* transporter */ = {
 			isa = PBXGroup;
 			children = (
+				410F73AC19902A55007E8958 /* ViewControllers */,
+				410F73A519902A34007E8958 /* Views */,
+				410F73A219902A22007E8958 /* NiBs */,
+				410F7399199029FB007E8958 /* External */,
 				458AAA5C19706F2D001A2AA1 /* AppDelegate.h */,
 				458AAA5D19706F2D001A2AA1 /* AppDelegate.m */,
 				4533A05D1982A08E0082C746 /* MainViewController.h */,
@@ -161,7 +244,7 @@
 		458AAA5119706F2D001A2AA1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				458AAA5219706F2D001A2AA1 /* transporter-Info.plist */,
+				410F73B619902AD0007E8958 /* transporter-Info.plist */,
 				458AAA5319706F2D001A2AA1 /* InfoPlist.strings */,
 				458AAA5619706F2D001A2AA1 /* main.m */,
 				458AAA5819706F2D001A2AA1 /* transporter-Prefix.pch */,
@@ -191,6 +274,8 @@
 		45AE35C91982AE1F0007A598 /* AppMetadata */ = {
 			isa = PBXGroup;
 			children = (
+				410F73B819902B12007E8958 /* AppMetadataDocument.h */,
+				410F73B919902B12007E8958 /* AppMetadataDocument.m */,
 				45AE35CA1982AE410007A598 /* AppMetadata.h */,
 				45AE35CB1982AE410007A598 /* AppMetadata.m */,
 				4519B9EF1982EF7B00D30FC9 /* Version.h */,
@@ -304,6 +389,7 @@
 				458AAA5519706F2D001A2AA1 /* InfoPlist.strings in Resources */,
 				458AAA6319706F2D001A2AA1 /* Images.xcassets in Resources */,
 				458AAA5B19706F2D001A2AA1 /* Credits.rtf in Resources */,
+				410F73A419902A2D007E8958 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,16 +410,24 @@
 			files = (
 				45BDA41A1989420300DEC41E /* iTunesConnectAccountManager.m in Sources */,
 				458AAA5E19706F2D001A2AA1 /* AppDelegate.m in Sources */,
+				410F73B319902A7E007E8958 /* AppMetaDataWindowController.m in Sources */,
+				410F73AA19902A42007E8958 /* MALabel.m in Sources */,
 				4533A05F1982A08E0082C746 /* MainViewController.m in Sources */,
 				45BDA417198941E800DEC41E /* iTunesConnectAccount.m in Sources */,
+				410F73A019902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m in Sources */,
 				45BDA40C198931C900DEC41E /* Keychain.m in Sources */,
+				410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */,
+				410F73BA19902B12007E8958 /* AppMetadataDocument.m in Sources */,
 				4519B9F11982EF7B00D30FC9 /* Version.m in Sources */,
+				410F73A119902A09007E8958 /* UIView+CompactConstraint.m in Sources */,
 				45AE35D21982AE7F0007A598 /* Screenshot.m in Sources */,
 				45BDA4121989352B00DEC41E /* NSError+KeychainErrors.m in Sources */,
 				45AE35D51982AFC30007A598 /* Locale.m in Sources */,
 				45AE35CC1982AE410007A598 /* AppMetadata.m in Sources */,
 				45EC126D1982D19400DFB39A /* NSData+md5.m in Sources */,
 				458AAA5719706F2D001A2AA1 /* main.m in Sources */,
+				410F73B419902A7E007E8958 /* MALocaleViewController.m in Sources */,
+				410F73AB19902A42007E8958 /* MATextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +555,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)/transporter/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "transporter/transporter-Prefix.pch";
@@ -483,7 +576,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
-					"$(PROJECT_DIR)/transporter/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "transporter/transporter-Prefix.pch";

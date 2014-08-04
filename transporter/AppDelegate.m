@@ -8,44 +8,36 @@
 
 #import "AppDelegate.h"
 #import <AppKit/AppKit.h>
-#import "MainViewController.h"
 
 @interface AppDelegate ()
-{
-    NSWindow *mainWindow;
-//    NSView *view;
-    MainViewController *viewController;
-}
 
+@property (nonatomic, strong) NSDocumentController *documentController;
 
 @end
 
 @implementation AppDelegate
 
--(id)init
-{
-    if(self = [super init]) {
-        NSRect contentSize = NSMakeRect(500.0, 200.0, 1000.0, 1000.0);
-        NSUInteger windowStyleMask = NSTitledWindowMask | NSResizableWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask;
-        mainWindow = [[NSWindow alloc] initWithContentRect:contentSize styleMask:windowStyleMask backing:NSBackingStoreBuffered defer:YES];
-        mainWindow.backgroundColor = [NSColor whiteColor];
-        mainWindow.title = @"Transporter";
-        viewController = [[MainViewController alloc] initWithSize:contentSize.size];
-        
-    }
-    return self;
-}
+@dynamic documentController;
+
+
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-    [mainWindow setContentView:viewController.view];           // Hook the view up to the window
+    [self documentController];
 }
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [mainWindow makeKeyAndOrderFront:self];     // Show the window
     
 }
 
 
+#pragma mark - Accessors
+- (NSDocumentController *)documentController
+{
+    return [NSDocumentController sharedDocumentController];
+}
+
+
 @end
+

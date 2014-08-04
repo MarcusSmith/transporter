@@ -37,6 +37,19 @@
     return self;
 }
 
+- (id)initWithXMLData:(NSData *)data
+{
+    self = [super init];
+    if (!self) return nil;
+    
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+    [parser setDelegate:self];
+    
+    [parser parse];
+    
+    return self;
+}
+
 #pragma mark - XML Delegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -95,7 +108,7 @@
             [currentLocale setTitle:trimmedString];
         }
         else if ([elementName isEqualToString:@"description"]) {
-            [currentLocale setDescription:trimmedString];
+            [currentLocale setLocalDescription:trimmedString];
         }
         else if ([elementName isEqualToString:@"keyword"]) {
             [currentLocale addKeyword:trimmedString];

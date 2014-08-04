@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSString *localDescription;
 @property (nonatomic, strong) NSArray *keywords; // Should be an array of strings only
 @property (nonatomic, strong) NSString *whatsNew;
 @property (nonatomic, strong) NSString *softwareURL;

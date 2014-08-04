@@ -8,7 +8,6 @@
 
 #import "MainViewController.h"
 #import "AppMetadata.h"
-#import "iTunesConnectManager.h"
 
 @interface MainViewController ()
 
@@ -72,10 +71,7 @@
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:nil];
         
         [xmlData writeToFile:[path stringByAppendingPathComponent:@"metadata.xml"] atomically:YES];
-        
-        iTunesConnectManager *manager = [[iTunesConnectManager alloc] init];
-        
-        [manager getListOfAllApps];
+
         
 //        [manager verifyPackage:path];
     }

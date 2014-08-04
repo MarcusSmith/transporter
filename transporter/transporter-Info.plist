@@ -28,5 +28,28 @@
 	<string>Copyright © 2014 Marcus Smith. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>itmsp</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ConnectorFileIcon</string>
+			<key>CFBundleTypeName</key>
+			<string>iTunes App Metadata</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>AppMetadataDocument</string>
+		</dict>
+	</array>
 </dict>
 </plist>
