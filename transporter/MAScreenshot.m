@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "Screenshot.h"
+#import "MAScreenshot.h"
 #import "NSData+md5.h"
 
 #define displayTargetiPhone4 @"iOS-3.5-in"
 #define displayTargetiPhone5 @"iOS-4-in"
 #define displayTargetiPad    @"iOS-iPad"
 
-@implementation Screenshot
+@implementation MAScreenshot
 
 - (id)initWithImageFile:(NSURL *)fileURL
 {

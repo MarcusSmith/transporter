@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "Keychain.h"
+#import "MAKeychain.h"
 
 NSString * const kServiceName = @"transporter";
 
-@implementation Keychain
+@implementation MAKeychain
 
 # pragma mark - storage
 + (BOOL)setObject:(id<NSCoding>)object forKey:(NSString *)key error:(NSError *__autoreleasing *)error
@@ -18,7 +18,7 @@ NSString * const kServiceName = @"transporter";
     //Make sure the key is not nil
     if (!key) {
         if (error) {
-            *error = [NSError KeychainNilKeyError];
+            *error = [NSError MAKeychainNilKeyError];
         }
         
         return NO;
@@ -76,7 +76,7 @@ NSString * const kServiceName = @"transporter";
     //Make sure the key is not nil
     if (!key) {
         if (error) {
-            *error = [NSError KeychainNilKeyError];
+            *error = [NSError MAKeychainNilKeyError];
         }
         
         return nil;
@@ -98,7 +98,7 @@ NSString * const kServiceName = @"transporter";
         retrievedObject = [NSKeyedUnarchiver unarchiveObjectWithData:objectData];
     } else if (error) {
         if (status == errSecItemNotFound) {
-            *error = [NSError KeychainSecItemNotFoundError];
+            *error = [NSError MAKeychainSecItemNotFoundError];
         }
         else {
             *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
@@ -114,7 +114,7 @@ NSString * const kServiceName = @"transporter";
     //Make sure the key is not nil
     if (!key) {
         if (error) {
-            *error = [NSError KeychainNilKeyError];
+            *error = [NSError MAKeychainNilKeyError];
         }
         
         return NO;
@@ -148,7 +148,7 @@ NSString * const kServiceName = @"transporter";
     // If the error was because there was nothing to delete, still return YES as this is still successful, otherwise return NO
     if (status == errSecItemNotFound) {
         if (error) {
-            *error = [NSError KeychainSecItemNotFoundError];
+            *error = [NSError MAKeychainSecItemNotFoundError];
         }
         
         return YES;

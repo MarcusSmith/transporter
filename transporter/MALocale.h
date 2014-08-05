@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Screenshot.h"
+#import "MAScreenshot.h"
 
-@interface Locale : NSObject
+@interface MALocale : NSObject
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *title;
@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSArray *screenshots; // Should be an array of screenshots only
 
 - (void)addKeyword:(NSString *)keyword;
-- (void)addScreenshot:(Screenshot *)screenshot;
+- (void)addScreenshot:(MAScreenshot *)screenshot;
 - (NSXMLElement *)NSXMLElementRepresentation;
 
 @end

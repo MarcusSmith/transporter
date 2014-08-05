@@ -12,11 +12,11 @@
 		410F73A419902A2D007E8958 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410F73A319902A2D007E8958 /* MainMenu.xib */; };
 		410F73AA19902A42007E8958 /* MALabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73A719902A42007E8958 /* MALabel.m */; };
 		410F73AB19902A42007E8958 /* MATextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73A919902A42007E8958 /* MATextField.m */; };
-		410F73B319902A7E007E8958 /* AppMetaDataWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */; };
+		410F73B319902A7E007E8958 /* MAAppMetaDataWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73AE19902A7E007E8958 /* MAAppMetaDataWindowController.m */; };
 		410F73B419902A7E007E8958 /* MALocaleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B019902A7E007E8958 /* MALocaleViewController.m */; };
 		410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */; };
-		410F73BA19902B12007E8958 /* AppMetadataDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B919902B12007E8958 /* AppMetadataDocument.m */; };
-		4519B9F11982EF7B00D30FC9 /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* Version.m */; };
+		410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B919902B12007E8958 /* MAAppMetadataDocument.m */; };
+		4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* MAVersion.m */; };
 		4533A05F1982A08E0082C746 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A05E1982A08E0082C746 /* MainViewController.m */; };
 		458AAA4B19706F2D001A2AA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AAA4A19706F2D001A2AA1 /* Cocoa.framework */; };
 		458AAA5519706F2D001A2AA1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458AAA5319706F2D001A2AA1 /* InfoPlist.strings */; };
@@ -28,13 +28,13 @@
 		458AAA6B19706F2D001A2AA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AAA4A19706F2D001A2AA1 /* Cocoa.framework */; };
 		458AAA7319706F2D001A2AA1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458AAA7119706F2D001A2AA1 /* InfoPlist.strings */; };
 		458AAA7519706F2D001A2AA1 /* transporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AAA7419706F2D001A2AA1 /* transporterTests.m */; };
-		45AE35CC1982AE410007A598 /* AppMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35CB1982AE410007A598 /* AppMetadata.m */; };
-		45AE35D21982AE7F0007A598 /* Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35D11982AE7F0007A598 /* Screenshot.m */; };
-		45AE35D51982AFC30007A598 /* Locale.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35D41982AFC30007A598 /* Locale.m */; };
-		45BDA40C198931C900DEC41E /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA40B198931C900DEC41E /* Keychain.m */; };
-		45BDA4121989352B00DEC41E /* NSError+KeychainErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4111989352B00DEC41E /* NSError+KeychainErrors.m */; };
-		45BDA417198941E800DEC41E /* iTunesConnectAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA416198941E800DEC41E /* iTunesConnectAccount.m */; };
-		45BDA41A1989420300DEC41E /* iTunesConnectAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4191989420300DEC41E /* iTunesConnectAccountManager.m */; };
+		45AE35CC1982AE410007A598 /* MAAppMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35CB1982AE410007A598 /* MAAppMetadata.m */; };
+		45AE35D21982AE7F0007A598 /* MAScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35D11982AE7F0007A598 /* MAScreenshot.m */; };
+		45AE35D51982AFC30007A598 /* MALocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE35D41982AFC30007A598 /* MALocale.m */; };
+		45BDA40C198931C900DEC41E /* MAKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA40B198931C900DEC41E /* MAKeychain.m */; };
+		45BDA4121989352B00DEC41E /* NSError+MAKeychainErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4111989352B00DEC41E /* NSError+MAKeychainErrors.m */; };
+		45BDA417198941E800DEC41E /* MAiTunesConnectAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */; };
+		45BDA41A1989420300DEC41E /* MAAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4191989420300DEC41E /* MAAccountManager.m */; };
 		45EC126D1982D19400DFB39A /* NSData+md5.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC126C1982D19400DFB39A /* NSData+md5.m */; };
 /* End PBXBuildFile section */
 
@@ -59,17 +59,17 @@
 		410F73A719902A42007E8958 /* MALabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALabel.m; sourceTree = "<group>"; };
 		410F73A819902A42007E8958 /* MATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATextField.h; sourceTree = "<group>"; };
 		410F73A919902A42007E8958 /* MATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATextField.m; sourceTree = "<group>"; };
-		410F73AD19902A7E007E8958 /* AppMetaDataWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetaDataWindowController.h; sourceTree = "<group>"; };
-		410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetaDataWindowController.m; sourceTree = "<group>"; };
+		410F73AD19902A7E007E8958 /* MAAppMetaDataWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppMetaDataWindowController.h; sourceTree = "<group>"; };
+		410F73AE19902A7E007E8958 /* MAAppMetaDataWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppMetaDataWindowController.m; sourceTree = "<group>"; };
 		410F73AF19902A7E007E8958 /* MALocaleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALocaleViewController.h; sourceTree = "<group>"; };
 		410F73B019902A7E007E8958 /* MALocaleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALocaleViewController.m; sourceTree = "<group>"; };
 		410F73B119902A7E007E8958 /* MAScreenshotsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAScreenshotsViewController.h; sourceTree = "<group>"; };
 		410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAScreenshotsViewController.m; sourceTree = "<group>"; };
 		410F73B619902AD0007E8958 /* transporter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "transporter-Info.plist"; sourceTree = "<group>"; };
-		410F73B819902B12007E8958 /* AppMetadataDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetadataDocument.h; sourceTree = "<group>"; };
-		410F73B919902B12007E8958 /* AppMetadataDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetadataDocument.m; sourceTree = "<group>"; };
-		4519B9EF1982EF7B00D30FC9 /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
-		4519B9F01982EF7B00D30FC9 /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
+		410F73B819902B12007E8958 /* MAAppMetadataDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppMetadataDocument.h; sourceTree = "<group>"; };
+		410F73B919902B12007E8958 /* MAAppMetadataDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppMetadataDocument.m; sourceTree = "<group>"; };
+		4519B9EF1982EF7B00D30FC9 /* MAVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVersion.h; sourceTree = "<group>"; };
+		4519B9F01982EF7B00D30FC9 /* MAVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVersion.m; sourceTree = "<group>"; };
 		4533A05D1982A08E0082C746 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		4533A05E1982A08E0082C746 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		458AAA4719706F2D001A2AA1 /* transporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = transporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,20 +89,20 @@
 		458AAA7019706F2D001A2AA1 /* transporterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "transporterTests-Info.plist"; sourceTree = "<group>"; };
 		458AAA7219706F2D001A2AA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		458AAA7419706F2D001A2AA1 /* transporterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = transporterTests.m; sourceTree = "<group>"; };
-		45AE35CA1982AE410007A598 /* AppMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMetadata.h; sourceTree = "<group>"; };
-		45AE35CB1982AE410007A598 /* AppMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppMetadata.m; sourceTree = "<group>"; };
-		45AE35D01982AE7F0007A598 /* Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screenshot.h; sourceTree = "<group>"; };
-		45AE35D11982AE7F0007A598 /* Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Screenshot.m; sourceTree = "<group>"; };
-		45AE35D31982AFC30007A598 /* Locale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Locale.h; sourceTree = "<group>"; };
-		45AE35D41982AFC30007A598 /* Locale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Locale.m; sourceTree = "<group>"; };
-		45BDA40A198931C900DEC41E /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
-		45BDA40B198931C900DEC41E /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
-		45BDA4101989352B00DEC41E /* NSError+KeychainErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+KeychainErrors.h"; sourceTree = "<group>"; };
-		45BDA4111989352B00DEC41E /* NSError+KeychainErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+KeychainErrors.m"; sourceTree = "<group>"; };
-		45BDA415198941E800DEC41E /* iTunesConnectAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunesConnectAccount.h; sourceTree = "<group>"; };
-		45BDA416198941E800DEC41E /* iTunesConnectAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iTunesConnectAccount.m; sourceTree = "<group>"; };
-		45BDA4181989420300DEC41E /* iTunesConnectAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunesConnectAccountManager.h; sourceTree = "<group>"; };
-		45BDA4191989420300DEC41E /* iTunesConnectAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iTunesConnectAccountManager.m; sourceTree = "<group>"; };
+		45AE35CA1982AE410007A598 /* MAAppMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppMetadata.h; sourceTree = "<group>"; };
+		45AE35CB1982AE410007A598 /* MAAppMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppMetadata.m; sourceTree = "<group>"; };
+		45AE35D01982AE7F0007A598 /* MAScreenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAScreenshot.h; sourceTree = "<group>"; };
+		45AE35D11982AE7F0007A598 /* MAScreenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAScreenshot.m; sourceTree = "<group>"; };
+		45AE35D31982AFC30007A598 /* MALocale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALocale.h; sourceTree = "<group>"; };
+		45AE35D41982AFC30007A598 /* MALocale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALocale.m; sourceTree = "<group>"; };
+		45BDA40A198931C900DEC41E /* MAKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAKeychain.h; sourceTree = "<group>"; };
+		45BDA40B198931C900DEC41E /* MAKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAKeychain.m; sourceTree = "<group>"; };
+		45BDA4101989352B00DEC41E /* NSError+MAKeychainErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+MAKeychainErrors.h"; sourceTree = "<group>"; };
+		45BDA4111989352B00DEC41E /* NSError+MAKeychainErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+MAKeychainErrors.m"; sourceTree = "<group>"; };
+		45BDA415198941E800DEC41E /* MAiTunesConnectAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAiTunesConnectAccount.h; sourceTree = "<group>"; };
+		45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAiTunesConnectAccount.m; sourceTree = "<group>"; };
+		45BDA4181989420300DEC41E /* MAAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAccountManager.h; sourceTree = "<group>"; };
+		45BDA4191989420300DEC41E /* MAAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAccountManager.m; sourceTree = "<group>"; };
 		45EC126B1982D19400DFB39A /* NSData+md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+md5.h"; sourceTree = "<group>"; };
 		45EC126C1982D19400DFB39A /* NSData+md5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+md5.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,8 +170,8 @@
 		410F73AC19902A55007E8958 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				410F73AD19902A7E007E8958 /* AppMetaDataWindowController.h */,
-				410F73AE19902A7E007E8958 /* AppMetaDataWindowController.m */,
+				410F73AD19902A7E007E8958 /* MAAppMetaDataWindowController.h */,
+				410F73AE19902A7E007E8958 /* MAAppMetaDataWindowController.m */,
 				410F73AF19902A7E007E8958 /* MALocaleViewController.h */,
 				410F73B019902A7E007E8958 /* MALocaleViewController.m */,
 				410F73B119902A7E007E8958 /* MAScreenshotsViewController.h */,
@@ -274,16 +274,16 @@
 		45AE35C91982AE1F0007A598 /* AppMetadata */ = {
 			isa = PBXGroup;
 			children = (
-				410F73B819902B12007E8958 /* AppMetadataDocument.h */,
-				410F73B919902B12007E8958 /* AppMetadataDocument.m */,
-				45AE35CA1982AE410007A598 /* AppMetadata.h */,
-				45AE35CB1982AE410007A598 /* AppMetadata.m */,
-				4519B9EF1982EF7B00D30FC9 /* Version.h */,
-				4519B9F01982EF7B00D30FC9 /* Version.m */,
-				45AE35D31982AFC30007A598 /* Locale.h */,
-				45AE35D41982AFC30007A598 /* Locale.m */,
-				45AE35D01982AE7F0007A598 /* Screenshot.h */,
-				45AE35D11982AE7F0007A598 /* Screenshot.m */,
+				410F73B819902B12007E8958 /* MAAppMetadataDocument.h */,
+				410F73B919902B12007E8958 /* MAAppMetadataDocument.m */,
+				45AE35CA1982AE410007A598 /* MAAppMetadata.h */,
+				45AE35CB1982AE410007A598 /* MAAppMetadata.m */,
+				4519B9EF1982EF7B00D30FC9 /* MAVersion.h */,
+				4519B9F01982EF7B00D30FC9 /* MAVersion.m */,
+				45AE35D31982AFC30007A598 /* MALocale.h */,
+				45AE35D41982AFC30007A598 /* MALocale.m */,
+				45AE35D01982AE7F0007A598 /* MAScreenshot.h */,
+				45AE35D11982AE7F0007A598 /* MAScreenshot.m */,
 			);
 			name = AppMetadata;
 			sourceTree = "<group>";
@@ -291,10 +291,10 @@
 		45BDA4131989379E00DEC41E /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
-				45BDA40A198931C900DEC41E /* Keychain.h */,
-				45BDA40B198931C900DEC41E /* Keychain.m */,
-				45BDA4101989352B00DEC41E /* NSError+KeychainErrors.h */,
-				45BDA4111989352B00DEC41E /* NSError+KeychainErrors.m */,
+				45BDA40A198931C900DEC41E /* MAKeychain.h */,
+				45BDA40B198931C900DEC41E /* MAKeychain.m */,
+				45BDA4101989352B00DEC41E /* NSError+MAKeychainErrors.h */,
+				45BDA4111989352B00DEC41E /* NSError+MAKeychainErrors.m */,
 			);
 			name = Keychain;
 			sourceTree = "<group>";
@@ -302,10 +302,10 @@
 		45BDA4141989418A00DEC41E /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				45BDA415198941E800DEC41E /* iTunesConnectAccount.h */,
-				45BDA416198941E800DEC41E /* iTunesConnectAccount.m */,
-				45BDA4181989420300DEC41E /* iTunesConnectAccountManager.h */,
-				45BDA4191989420300DEC41E /* iTunesConnectAccountManager.m */,
+				45BDA415198941E800DEC41E /* MAiTunesConnectAccount.h */,
+				45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */,
+				45BDA4181989420300DEC41E /* MAAccountManager.h */,
+				45BDA4191989420300DEC41E /* MAAccountManager.m */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -408,22 +408,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45BDA41A1989420300DEC41E /* iTunesConnectAccountManager.m in Sources */,
+				45BDA41A1989420300DEC41E /* MAAccountManager.m in Sources */,
 				458AAA5E19706F2D001A2AA1 /* AppDelegate.m in Sources */,
-				410F73B319902A7E007E8958 /* AppMetaDataWindowController.m in Sources */,
+				410F73B319902A7E007E8958 /* MAAppMetaDataWindowController.m in Sources */,
 				410F73AA19902A42007E8958 /* MALabel.m in Sources */,
 				4533A05F1982A08E0082C746 /* MainViewController.m in Sources */,
-				45BDA417198941E800DEC41E /* iTunesConnectAccount.m in Sources */,
+				45BDA417198941E800DEC41E /* MAiTunesConnectAccount.m in Sources */,
 				410F73A019902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m in Sources */,
-				45BDA40C198931C900DEC41E /* Keychain.m in Sources */,
+				45BDA40C198931C900DEC41E /* MAKeychain.m in Sources */,
 				410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */,
-				410F73BA19902B12007E8958 /* AppMetadataDocument.m in Sources */,
-				4519B9F11982EF7B00D30FC9 /* Version.m in Sources */,
+				410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */,
+				4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */,
 				410F73A119902A09007E8958 /* UIView+CompactConstraint.m in Sources */,
-				45AE35D21982AE7F0007A598 /* Screenshot.m in Sources */,
-				45BDA4121989352B00DEC41E /* NSError+KeychainErrors.m in Sources */,
-				45AE35D51982AFC30007A598 /* Locale.m in Sources */,
-				45AE35CC1982AE410007A598 /* AppMetadata.m in Sources */,
+				45AE35D21982AE7F0007A598 /* MAScreenshot.m in Sources */,
+				45BDA4121989352B00DEC41E /* NSError+MAKeychainErrors.m in Sources */,
+				45AE35D51982AFC30007A598 /* MALocale.m in Sources */,
+				45AE35CC1982AE410007A598 /* MAAppMetadata.m in Sources */,
 				45EC126D1982D19400DFB39A /* NSData+md5.m in Sources */,
 				458AAA5719706F2D001A2AA1 /* main.m in Sources */,
 				410F73B419902A7E007E8958 /* MALocaleViewController.m in Sources */,

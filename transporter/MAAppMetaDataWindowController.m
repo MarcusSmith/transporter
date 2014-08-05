@@ -1,19 +1,19 @@
 //
-//  AppMetaDataWindowController.m
+//  MAAppMetaDataWindowController.m
 //  transporter
 //
 //  Created by Austin Younts on 7/30/14.
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "AppMetaDataWindowController.h"
+#import "MAAppMetaDataWindowController.h"
 
-#import "AppMetadataDocument.h"
+#import "MAAppMetadataDocument.h"
 
 #import "MALocaleViewController.h"
 
-#import "AppMetadata.h"
-#import "Version.h"
+#import "MAAppMetadata.h"
+#import "MAVersion.h"
 
 #import "MATextField.h"
 #import "MALabel.h"
@@ -22,9 +22,9 @@
 
 #import <objc/runtime.h>
 
-@interface AppMetaDataWindowController ()<NSWindowDelegate>
+@interface MAAppMetaDataWindowController ()<NSWindowDelegate>
 
-@property (nonatomic, strong, readonly) AppMetadataDocument *metaDataDocument;
+@property (nonatomic, strong, readonly) MAAppMetadataDocument *metaDataDocument;
 
 @property (nonatomic, strong) MATextField *textFieldForProvider;
 @property (nonatomic, strong) MATextField *textFieldForTeamID;
@@ -51,7 +51,7 @@
 
 @end
 
-@implementation AppMetaDataWindowController
+@implementation MAAppMetaDataWindowController
 @dynamic metaDataDocument;
 
 - (id)initWithWindow:(NSWindow *)window
@@ -116,7 +116,7 @@
     
     [super setDocument:document];
     
-    AppMetadataDocument *metaDoc = document;
+    MAAppMetadataDocument *metaDoc = document;
     
     self.versionsController = [[NSArrayController alloc] initWithContent:metaDoc.model.versions];
     [self.popUpForVersions bind:@"content" toObject:self.versionsController withKeyPath:@"arrangedObjects" options:nil];
@@ -133,7 +133,7 @@
     [self.textFieldForVendorID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"vendorID" options:nil];
 }
 
-- (AppMetadataDocument *)metaDataDocument
+- (MAAppMetadataDocument *)metaDataDocument
 {
     return self.document;
 }
@@ -143,7 +143,7 @@
     NSLog(@"Popup menu changed, controller selected index: %ld", self.versionsController.selectionIndex);
     
     if (popUp == self.popUpForVersions) {
-        Version *version = self.versionsController.arrangedObjects[self.versionsController.selectionIndex];
+        MAVersion *version = self.versionsController.arrangedObjects[self.versionsController.selectionIndex];
         self.localesController.content = version.locales;
     }
     else if (popUp == self.popUpForLocales)

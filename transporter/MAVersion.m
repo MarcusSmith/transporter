@@ -1,16 +1,16 @@
 //
-//  Version.m
+//  MAVersion.m
 //  transporter
 //
 //  Created by Marcus Smith on 7/25/14.
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "Version.h"
+#import "MAVersion.h"
 
-@implementation Version
+@implementation MAVersion
 
-- (void)addLocale:(Locale *)locale
+- (void)addLocale:(MALocale *)locale
 {
     self.locales = [self.locales arrayByAddingObject:locale];
 }
@@ -35,7 +35,7 @@
     [root addAttribute:[NSXMLNode attributeWithName:@"string" stringValue:self.versionString]];
     
     NSXMLElement *locales = [[NSXMLElement alloc] initWithName:@"locales"];
-    [self.locales.copy enumerateObjectsUsingBlock:^(Locale *locale, NSUInteger idx, BOOL *stop) {
+    [self.locales.copy enumerateObjectsUsingBlock:^(MALocale *locale, NSUInteger idx, BOOL *stop) {
         NSXMLElement *element = [locale NSXMLElementRepresentation];
         if (element) {
             [locales addChild:element];

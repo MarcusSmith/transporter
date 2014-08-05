@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-#import "AppMetadata.h"
+#import "MAAppMetadata.h"
 
 @interface MainViewController ()
 
@@ -54,9 +54,9 @@
         NSLog(@"Path: %@", [chosenURL path]);
         NSURL *xmlURL = [chosenURL URLByAppendingPathComponent:@"metadata.xml"];
         
-        AppMetadata *testMetadata = [[AppMetadata alloc] initWithXML:xmlURL];
-        Version *aVersion = [[testMetadata versions] objectAtIndex:0];
-        Locale *aLocale = [[aVersion locales] objectAtIndex:0];
+        MAAppMetadata *testMetadata = [[MAAppMetadata alloc] initWithXML:xmlURL];
+        MAVersion *aVersion = [[testMetadata versions] objectAtIndex:0];
+        MALocale *aLocale = [[aVersion locales] objectAtIndex:0];
         NSMutableArray *keywords = aLocale.keywords.mutableCopy;
         NSString *testKeyword = @"tst";
         [keywords insertObject:testKeyword atIndex:2];

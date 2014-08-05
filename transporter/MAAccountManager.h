@@ -1,5 +1,5 @@
 //
-//  iTunesConnectAccountManager.h
+//  MAAccountManager.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/30/14.
@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "iTunesConnectAccount.h"
+#import "MAiTunesConnectAccount.h"
 
-@interface iTunesConnectAccountManager : NSObject
+@interface MAAccountManager : NSObject
 
 + (NSSet *)iTunesConnectAccounts;
 + (NSSet *)allUsernames;
 + (NSSet *)allProviderNames;
 
-+ (iTunesConnectAccount *)accountWithUsername:(NSString *)username;
-+ (iTunesConnectAccount *)accountWithProviderName:(NSString *)provider;
++ (MAiTunesConnectAccount *)accountWithUsername:(NSString *)username;
++ (MAiTunesConnectAccount *)accountWithProviderName:(NSString *)provider;
 
-+ (BOOL)addAccount:(iTunesConnectAccount *)account;
++ (BOOL)addAccount:(MAiTunesConnectAccount *)account;
 
 + (BOOL)removeAccountWithUsername:(NSString *)username;
 + (BOOL)removeAccountWithProviderName:(NSString *)provider;

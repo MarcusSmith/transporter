@@ -1,28 +1,28 @@
 //
-//  AppMetadataDocument.m
+//  MAAppMetadataDocument.m
 //  transporter
 //
 //  Created by Austin Younts on 7/30/14.
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "AppMetadataDocument.h"
+#import "MAAppMetadataDocument.h"
 
-#import "AppMetaDataWindowController.h"
+#import "MAAppMetaDataWindowController.h"
 
-#import "AppMetadata.h"
+#import "MAAppMetadata.h"
 
-@interface AppMetadataDocument ()
+@interface MAAppMetadataDocument ()
 
-@property (nonatomic, strong) AppMetaDataWindowController *windowController;
+@property (nonatomic, strong) MAAppMetaDataWindowController *windowController;
 
-@property (nonatomic, strong) AppMetadata *model;
+@property (nonatomic, strong) MAAppMetadata *model;
 
 @end
 
 
 
-@implementation AppMetadataDocument
+@implementation MAAppMetadataDocument
 
 - (id)init
 {
@@ -44,7 +44,7 @@
 
 - (void)makeWindowControllers
 {
-    [self addWindowController:[[AppMetaDataWindowController alloc] init]];
+    [self addWindowController:[[MAAppMetaDataWindowController alloc] init]];
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
@@ -68,7 +68,7 @@
     if (fileWrapper.isDirectory) {
         [fileWrapper.fileWrappers enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSFileWrapper *wrapper, BOOL *stop) {
             if (wrapper.isRegularFile && [wrapper.preferredFilename hasSuffix:@"xml"]) {
-                self.model = [[AppMetadata alloc] initWithXMLData:wrapper.regularFileContents];
+                self.model = [[MAAppMetadata alloc] initWithXMLData:wrapper.regularFileContents];
                 if (self.model) {
                     *stop = YES;
                 }

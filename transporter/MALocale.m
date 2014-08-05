@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "Locale.h"
+#import "MALocale.h"
 
-@implementation Locale
+@implementation MALocale
 
-- (void)addScreenshot:(Screenshot *)screenshot
+- (void)addScreenshot:(MAScreenshot *)screenshot
 {
     self.screenshots = [self.screenshots arrayByAddingObject:screenshot];
 }
@@ -90,7 +90,7 @@
     
     if (self.screenshots && self.screenshots.count > 0) {
         NSXMLElement *screenshots = [[NSXMLElement alloc] initWithName:@"software_screenshots"];
-        [self.screenshots.copy enumerateObjectsUsingBlock:^(Screenshot *screenshot, NSUInteger idx, BOOL *stop) {
+        [self.screenshots.copy enumerateObjectsUsingBlock:^(MAScreenshot *screenshot, NSUInteger idx, BOOL *stop) {
             NSXMLElement *element = [screenshot NSXMLElementRepresentation];
             if (element) {
                 [screenshots addChild:element];

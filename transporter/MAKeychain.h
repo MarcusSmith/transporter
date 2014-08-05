@@ -1,5 +1,5 @@
 //
-//  Keychain.h
+//  MAKeychain.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/30/14.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSError+KeychainErrors.h"
+#import "NSError+MAKeychainErrors.h"
 
-@interface Keychain : NSObject
+@interface MAKeychain : NSObject
 
 + (BOOL)setObject:(id<NSCoding>)object forKey:(NSString *)key error:(NSError **)error;
 

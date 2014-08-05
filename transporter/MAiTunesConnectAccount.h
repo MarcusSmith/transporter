@@ -1,5 +1,5 @@
 //
-//  iTunesConnectAccount.h
+//  MAiTunesConnectAccount.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/30/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface iTunesConnectAccount : NSObject <NSCoding>
+@interface MAiTunesConnectAccount : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *providerName;

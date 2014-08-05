@@ -1,15 +1,15 @@
 //
-//  iTunesConnectAccount.m
+//  MAiTunesConnectAccount.m
 //  transporter
 //
 //  Created by Marcus Smith on 7/30/14.
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "iTunesConnectAccount.h"
-#import "Keychain.h"
+#import "MAiTunesConnectAccount.h"
+#import "MAKeychain.h"
 
-@implementation iTunesConnectAccount
+@implementation MAiTunesConnectAccount
 
 - (id)initWithUsername:(NSString *)username
 {
@@ -30,7 +30,7 @@
 - (NSString *)password
 {
     NSError *error;
-    NSString *password = [Keychain objectForKey:self.username error:&error];
+    NSString *password = [MAKeychain objectForKey:self.username error:&error];
     
     //TODO: Error handling!
     return password;
@@ -39,7 +39,7 @@
 - (void)setPassword:(NSString *)password
 {
     NSError *error;
-    [Keychain setObject:password forKey:self.username error:&error];
+    [MAKeychain setObject:password forKey:self.username error:&error];
     
     //TODO: Error handling!!
 }

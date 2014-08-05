@@ -1,14 +1,14 @@
 //
-//  iTunesConnectAccountManager.m
+//  MAAccountManager.m
 //  transporter
 //
 //  Created by Marcus Smith on 7/30/14.
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "iTunesConnectAccountManager.h"
+#import "MAAccountManager.h"
 
-@implementation iTunesConnectAccountManager
+@implementation MAAccountManager
 
 + (NSSet *)iTunesConnectAccounts
 {
@@ -27,7 +27,7 @@
     NSSet *accounts = [self iTunesConnectAccounts];
     NSMutableSet *usernames = [NSMutableSet set];
     
-    [accounts enumerateObjectsUsingBlock:^(iTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         [usernames addObject:account.username];
     }];
     
@@ -39,7 +39,7 @@
     NSSet *accounts = [self iTunesConnectAccounts];
     NSMutableSet *providers = [NSMutableSet set];
     
-    [accounts enumerateObjectsUsingBlock:^(iTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         [providers addObject:account.providerName];
     }];
     
@@ -47,12 +47,12 @@
 }
 
 
-+ (iTunesConnectAccount *)accountWithUsername:(NSString *)username
++ (MAiTunesConnectAccount *)accountWithUsername:(NSString *)username
 {
     NSSet *accounts = [self iTunesConnectAccounts];
-    __block iTunesConnectAccount *foundAccount = nil;
+    __block MAiTunesConnectAccount *foundAccount = nil;
     
-    [accounts enumerateObjectsUsingBlock:^(iTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         if ([account.username isEqualToString:username]) {
             foundAccount = account.copy;
             *stop = YES;
@@ -62,12 +62,12 @@
     return foundAccount;
 }
 
-+ (iTunesConnectAccount *)accountWithProviderName:(NSString *)provider
++ (MAiTunesConnectAccount *)accountWithProviderName:(NSString *)provider
 {
     NSSet *accounts = [self iTunesConnectAccounts];
-    __block iTunesConnectAccount *foundAccount = nil;
+    __block MAiTunesConnectAccount *foundAccount = nil;
     
-    [accounts enumerateObjectsUsingBlock:^(iTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         if ([account.providerName isEqualToString:provider]) {
             foundAccount = account.copy;
             *stop = YES;
@@ -77,7 +77,7 @@
     return foundAccount;
 }
 
-+ (BOOL)addAccount:(iTunesConnectAccount *)account
++ (BOOL)addAccount:(MAiTunesConnectAccount *)account
 {
     NSMutableSet *mutableAccounts = [self iTunesConnectAccounts].mutableCopy;
     
@@ -97,7 +97,7 @@
         return NO;
     }
     
-    iTunesConnectAccount *matchingAccount = [self accountWithUsername:username];
+    MAiTunesConnectAccount *matchingAccount = [self accountWithUsername:username];
     
     if (!matchingAccount) {
         return NO;
@@ -117,7 +117,7 @@
         return NO;
     }
     
-    iTunesConnectAccount *matchingAccount = [self accountWithProviderName:provider];
+    MAiTunesConnectAccount *matchingAccount = [self accountWithProviderName:provider];
     
     if (!matchingAccount) {
         return NO;

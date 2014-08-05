@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 Marcus Smith. All rights reserved.
 //
 
-#import "AppMetadata.h"
+#import "MAAppMetadata.h"
 
-@interface AppMetadata ()
+@interface MAAppMetadata ()
 {
     NSString *xmlString;
     NSMutableArray *mutableVersions;
-    Version *currentVersion;
-    Locale *currentLocale;
-    Screenshot *currentScreenshot;
+    MAVersion *currentVersion;
+    MALocale *currentLocale;
+    MAScreenshot *currentScreenshot;
 }
 
 @end
 
-@implementation AppMetadata
+@implementation MAAppMetadata
 
 - (id)initWithXML:(NSURL *)xmlURL
 {
@@ -63,15 +63,15 @@
         mutableVersions = [NSMutableArray array];
     }
     else if ([elementName isEqualToString:@"version"]) {
-        currentVersion = [[Version alloc] init];
+        currentVersion = [[MAVersion alloc] init];
         [currentVersion setVersionString:attributeDict[@"string"]];
     }
     else if ([elementName isEqualToString:@"locale"]) {
-        currentLocale = [[Locale alloc] init];
+        currentLocale = [[MALocale alloc] init];
         [currentLocale setName:attributeDict[@"name"]];
     }
     else if ([elementName isEqualToString:@"software_screenshot"]) {
-        currentScreenshot = [[Screenshot alloc] init];
+        currentScreenshot = [[MAScreenshot alloc] init];
         [currentScreenshot setDisplayTarget:attributeDict[@"display_target"]];
         NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -188,7 +188,7 @@
     NSXMLElement *versions = [[NSXMLElement alloc] initWithName:@"versions"];
     [softwareMetadata addChild:versions];
     
-    [self.versions.copy enumerateObjectsUsingBlock:^(Version *version, NSUInteger idx, BOOL *stop) {
+    [self.versions.copy enumerateObjectsUsingBlock:^(MAVersion *version, NSUInteger idx, BOOL *stop) {
         NSXMLElement *element = [version NSXMLElementRepresentation];
         if (element) {
             [versions addChild:element];

@@ -1,5 +1,5 @@
 //
-//  Screenshot.h
+//  MAScreenshot.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/25/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Screenshot : NSObject
+@interface MAScreenshot : NSObject
 
 @property (nonatomic, strong) NSString *displayTarget;
 @property (nonatomic, readwrite) NSUInteger position;

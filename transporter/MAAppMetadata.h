@@ -1,5 +1,5 @@
 //
-//  AppMetadata.h
+//  MAAppMetadata.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/25/14.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Version.h"
+#import "MAVersion.h"
 
-@interface AppMetadata : NSObject <NSXMLParserDelegate>
+@interface MAAppMetadata : NSObject <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSDictionary *packageDictionary;
 @property (nonatomic, strong) NSString *provider;

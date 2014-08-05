@@ -1,5 +1,5 @@
 //
-//  AppMetaDataWindowController.h
+//  MAAppMetaDataWindowController.h
 //  transporter
 //
 //  Created by Austin Younts on 7/30/14.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppMetaDataWindowController : NSWindowController
+@interface MAAppMetaDataWindowController : NSWindowController
 
 @end

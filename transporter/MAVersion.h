@@ -1,5 +1,5 @@
 //
-//  Version.h
+//  MAVersion.h
 //  transporter
 //
 //  Created by Marcus Smith on 7/25/14.
@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Locale.h"
+#import "MALocale.h"
 
-@interface Version : NSObject
+@interface MAVersion : NSObject
 
 @property (nonatomic, strong) NSString *versionString;
 @property (nonatomic, strong) NSArray *locales;
 
-- (void)addLocale:(Locale *)locale;
+- (void)addLocale:(MALocale *)locale;
 - (NSXMLElement *)NSXMLElementRepresentation;
 
 @end
