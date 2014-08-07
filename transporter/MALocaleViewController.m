@@ -74,6 +74,8 @@
                                             metrics:nil views:views];
     [self.documentView addConstraintsWithVisualFormat:@"H:|-20-[localDescriptionT]-20-|" options:0 metrics:nil views:views];
     
+    [self.view layoutSubtreeIfNeeded];
+    
     return self;
 }
 
@@ -83,11 +85,22 @@
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+#pragma mark - Visual Control
+- (void)scrollToBeginningOfDocument:(id)sender
+{
+    [self.scrollView.documentView scrollPoint:NSMakePoint(0.0, NSMaxY([self.scrollView.documentView frame]))];
+}
+
+- (void)scrollToEndOfDocument:(id)sender
+{
+    
+}
+
 #pragma mark - Accessors
 - (void)setLocale:(Locale *)locale
 {
     _locale = locale;
-    
+
     [self.textFieldForTitle bind:@"stringValue" toObject:locale withKeyPath:@"title" options:nil];
     [self.textFieldForLocalDescription bind:@"stringValue" toObject:locale withKeyPath:@"localDescription" options:nil];
     [self.textFieldForWhatsNew bind:@"stringValue" toObject:locale withKeyPath:@"whatsNew" options:nil];

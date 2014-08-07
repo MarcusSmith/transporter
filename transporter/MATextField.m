@@ -24,19 +24,12 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-}
-
 - (void)setStringValue:(NSString *)aString
 {
     if (aString) {
         [super setStringValue:aString];
         
         [self invalidateIntrinsicContentSize];
-        NSLog(@"%@: %@", NSStringFromSelector(_cmd), aString);
     }
 }
 
@@ -48,8 +41,6 @@
     
     size.height += 10.0;
     size.width += 12.0;
-    
-    NSLog(@"%@, %@", self, NSStringFromSize(size));
     
     return size;
 }

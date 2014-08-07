@@ -20,8 +20,6 @@
 
 #import "CompactConstraint.h"
 
-#import <objc/runtime.h>
-
 @interface MAAppMetaDataWindowController ()<NSWindowDelegate>
 
 @property (nonatomic, strong, readonly) MAAppMetadataDocument *metaDataDocument;
@@ -111,7 +109,6 @@
 
 - (void)setDocument:(id)document
 {
-    NSLog(@"%@: %@", NSStringFromSelector(_cmd), document);
     if (!document) return;
     
     [super setDocument:document];
@@ -131,6 +128,17 @@
     [self.textFieldForProvider bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"provider" options:nil];
     [self.textFieldForTeamID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"teamID" options:nil];
     [self.textFieldForVendorID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"vendorID" options:nil];
+    
+    if (self.popUpForVersions.itemArray.count > 0) {
+        [self.popUpForVersions selectItemAtIndex:0];
+        [self popUpMenuChanged:self.popUpForVersions];
+    }
+    
+    if (self.popUpForLocales.itemArray.count > 0) {
+        [self.popUpForLocales selectItemAtIndex:0];
+        [self popUpMenuChanged:self.popUpForLocales];
+        [self.localeViewController scrollToBeginningOfDocument:self];
+    }
 }
 
 - (MAAppMetadataDocument *)metaDataDocument
@@ -140,8 +148,6 @@
 
 - (void)popUpMenuChanged:(NSPopUpButton *)popUp
 {
-    NSLog(@"Popup menu changed, controller selected index: %ld", self.versionsController.selectionIndex);
-    
     if (popUp == self.popUpForVersions) {
         MAVersion *version = self.versionsController.arrangedObjects[self.versionsController.selectionIndex];
         self.localesController.content = version.locales;
