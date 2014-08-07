@@ -56,7 +56,7 @@
     if (!self) return nil;
     
 #pragma mark - Autolayout
-    NSDictionary *views = @{@"scrollView" : self.scrollView, @"titleL" : self.labelForTitle, @"localDescriptionL" : self.labelForLocalDescription, @"whatsNewL" : self.labelForWhatsNew, @"softwareURLL" : self.labelForSoftwareURL, @"privacyURLL" : self.labelForPrivacyURL, @"supportURLL" : self.labelForSupportURL, @"titleT" : self.textFieldForTitle, @"localDescriptionT" : self.textFieldForLocalDescription, @"whatsNewT" : self.textFieldForWhatsNew, @"softwareURLT" : self.textFieldForSoftwareURL, @"privacyURLT" : self.textFieldForPrivacyURL, @"supportURLT" : self.textFieldForSupportURL, @"screenshots" : self.containerForScreenshotController};
+    NSDictionary *views = @{@"scrollView" : self.scrollView, @"documentView" : self.documentView, @"titleL" : self.labelForTitle, @"localDescriptionL" : self.labelForLocalDescription, @"whatsNewL" : self.labelForWhatsNew, @"softwareURLL" : self.labelForSoftwareURL, @"privacyURLL" : self.labelForPrivacyURL, @"supportURLL" : self.labelForSupportURL, @"titleT" : self.textFieldForTitle, @"localDescriptionT" : self.textFieldForLocalDescription, @"whatsNewT" : self.textFieldForWhatsNew, @"softwareURLT" : self.textFieldForSoftwareURL, @"privacyURLT" : self.textFieldForPrivacyURL, @"supportURLT" : self.textFieldForSupportURL, @"screenshots" : self.containerForScreenshotController};
     
     [self.view addConstraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics:nil views:views];
     [self.view addConstraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views];
@@ -70,9 +70,14 @@
     
     NSString *verticalFormatString = [NSString stringWithFormat:@"V:|-10-[titleL(==%@)]-%@-[titleT(==%@)]-%@-[localDescriptionL(==%@)]-%@-[localDescriptionT(==300)]-%@-[whatsNewL(==%@)]-%@-[whatsNewT(==150)]-%@-[softwareURLL(==%@)]-%@-[softwareURLT(==%@)]-%@-[privacyURLL(==%@)]-%@-[privacyURLT(==%@)]-%@-[supportURLL(==%@)]-%@-[supportURLT(==%@)]-20-[screenshots]-20-|", lh, ltp, slfh, gp, lh, ltp, gp, lh, ltp, gp, lh, ltp, slfh, gp, lh, ltp, slfh, gp, lh, ltp, slfh];
     [self.documentView addConstraintsWithVisualFormat:verticalFormatString
-                                            options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                            metrics:nil views:views];
-    [self.documentView addConstraintsWithVisualFormat:@"H:|-20-[localDescriptionT]-20-|" options:0 metrics:nil views:views];
+                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                              metrics:nil views:views];
+    
+    
+    [self.scrollView addCompactConstraints:@[@"documentView.left == localDescriptionT.left", @"documentView.right == localDescriptionT.right"] metrics:nil views:views];
+    [self.scrollView addCompactConstraints:@[@"scrollView.left == documentView.left", @"scrollView.right == documentView.right", @"scrollView.top == documentView.top"] metrics:nil views:views];
+    
+    [self.view layoutSubtreeIfNeeded];
     
     return self;
 }
@@ -83,11 +88,25 @@
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
+#pragma mark - Visual Control
+- (void)scrollToBeginningOfDocument:(id)sender
+{
+    NSRect frame = [self.scrollView.documentView frame];
+    CGFloat y = NSMinY(frame);
+    y = ABS(y);
+    [self.scrollView.documentView scrollPoint:NSMakePoint(0.0, y)];
+}
+
+- (void)scrollToEndOfDocument:(id)sender
+{
+    
+}
+
 #pragma mark - Accessors
 - (void)setLocale:(Locale *)locale
 {
     _locale = locale;
-    
+
     [self.textFieldForTitle bind:@"stringValue" toObject:locale withKeyPath:@"title" options:nil];
     [self.textFieldForLocalDescription bind:@"stringValue" toObject:locale withKeyPath:@"localDescription" options:nil];
     [self.textFieldForWhatsNew bind:@"stringValue" toObject:locale withKeyPath:@"whatsNew" options:nil];

@@ -48,7 +48,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>NSDocumentClass</key>
-			<string>AppMetadataDocument</string>
+			<string>MAAppMetadataDocument</string>
 		</dict>
 	</array>
 </dict>
