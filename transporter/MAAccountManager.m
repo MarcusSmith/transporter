@@ -10,16 +10,33 @@
 
 @implementation MAAccountManager
 
-+ (NSSet *)iTunesConnectAccounts
+static NSMutableSet *_itunesConnectAccounts;
+static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
+
++ (NSMutableSet *)iTunesConnectAccounts
 {
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"iTunesConnectAccounts"];
-    NSSet *accounts = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:iTunesConnectKey];
+        NSSet *accounts = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        if (!accounts) {
+            _itunesConnectAccounts = [NSMutableSet set];
+        }
+        else {
+            _itunesConnectAccounts = accounts.mutableCopy;
+        }
+        
+    });
     
-    if (!accounts) {
-        return [NSSet set];
-    }
-    
-    return accounts;
+    return _itunesConnectAccounts;
+}
+
++ (BOOL)saveAccounts
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_itunesConnectAccounts.copy];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:iTunesConnectKey];
+    return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSSet *)allUsernames
@@ -54,7 +71,7 @@
     
     [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         if ([account.username isEqualToString:username]) {
-            foundAccount = account.copy;
+            foundAccount = account;
             *stop = YES;
         }
     }];
@@ -69,7 +86,7 @@
     
     [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
         if ([account.providerName isEqualToString:provider]) {
-            foundAccount = account.copy;
+            foundAccount = account;
             *stop = YES;
         }
     }];
@@ -79,40 +96,41 @@
 
 + (BOOL)addAccount:(MAiTunesConnectAccount *)account
 {
-    NSMutableSet *mutableAccounts = [self iTunesConnectAccounts].mutableCopy;
-    
     if (!account) {
         return NO;
     }
     
-    [mutableAccounts addObject:account];
-    return [self setAccounts:mutableAccounts.copy];
+    // If this account already exists, remove the previous one
+    [self removeAccountWithUsername:account.username];
+    
+    [[self iTunesConnectAccounts] addObject:account];
+    
+    return [self saveAccounts];
 }
 
 + (BOOL)removeAccountWithUsername:(NSString *)username
 {
-    NSMutableSet *mutableAccounts = [self iTunesConnectAccounts].mutableCopy;
-    
     if (!username) {
         return NO;
     }
-    
+
     MAiTunesConnectAccount *matchingAccount = [self accountWithUsername:username];
     
     if (!matchingAccount) {
         return NO;
     }
     
-    [mutableAccounts removeObject:matchingAccount];
+    [[self iTunesConnectAccounts] removeObject:matchingAccount];
     
+    BOOL keychainSuccess = [matchingAccount removePasswordWithError:nil];
     
-    return [self setAccounts:mutableAccounts.copy];
+    BOOL userDefaultsSuccess = [self saveAccounts];
+    
+    return keychainSuccess && userDefaultsSuccess;
 }
 
 + (BOOL)removeAccountWithProviderName:(NSString *)provider
 {
-    NSMutableSet *mutableAccounts = [self iTunesConnectAccounts].mutableCopy;
-    
     if (!provider) {
         return NO;
     }
@@ -123,24 +141,24 @@
         return NO;
     }
     
-    [mutableAccounts removeObject:matchingAccount];
+    [[self iTunesConnectAccounts] removeObject:matchingAccount];
     
-    
-    return [self setAccounts:mutableAccounts.copy];
+    return [self saveAccounts];
 }
 
 + (BOOL)removeAllAccounts
 {
-    NSSet *emptySet = [NSSet set];
+    NSSet *accounts = [self iTunesConnectAccounts].copy;
     
-    return [self setAccounts:emptySet];
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
+        [account removePasswordWithError:nil];
+    }];
+    
+    _itunesConnectAccounts = [NSMutableSet set];
+    
+    return [self saveAccounts];
 }
 
-+ (BOOL)setAccounts:(NSSet *)accounts
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:accounts];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"iTunesConnectAccounts"];
-    return [[NSUserDefaults standardUserDefaults] synchronize];
-}
+
 
 @end

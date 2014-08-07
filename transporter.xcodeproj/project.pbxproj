@@ -18,6 +18,7 @@
 		410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B919902B12007E8958 /* MAAppMetadataDocument.m */; };
 		4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* MAVersion.m */; };
 		4533A05F1982A08E0082C746 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A05E1982A08E0082C746 /* MainViewController.m */; };
+		454BF4A9199110DB00D2A1F4 /* MATransporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 454BF4A8199110DB00D2A1F4 /* MATransporter.m */; };
 		458AAA4B19706F2D001A2AA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AAA4A19706F2D001A2AA1 /* Cocoa.framework */; };
 		458AAA5519706F2D001A2AA1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 458AAA5319706F2D001A2AA1 /* InfoPlist.strings */; };
 		458AAA5719706F2D001A2AA1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 458AAA5619706F2D001A2AA1 /* main.m */; };
@@ -72,6 +73,8 @@
 		4519B9F01982EF7B00D30FC9 /* MAVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVersion.m; sourceTree = "<group>"; };
 		4533A05D1982A08E0082C746 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		4533A05E1982A08E0082C746 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		454BF4A7199110DB00D2A1F4 /* MATransporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATransporter.h; sourceTree = "<group>"; };
+		454BF4A8199110DB00D2A1F4 /* MATransporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATransporter.m; sourceTree = "<group>"; };
 		458AAA4719706F2D001A2AA1 /* transporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = transporter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		458AAA4A19706F2D001A2AA1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		458AAA4D19706F2D001A2AA1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -306,6 +309,8 @@
 				45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */,
 				45BDA4181989420300DEC41E /* MAAccountManager.h */,
 				45BDA4191989420300DEC41E /* MAAccountManager.m */,
+				454BF4A7199110DB00D2A1F4 /* MATransporter.h */,
+				454BF4A8199110DB00D2A1F4 /* MATransporter.m */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -418,6 +423,7 @@
 				45BDA40C198931C900DEC41E /* MAKeychain.m in Sources */,
 				410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */,
 				410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */,
+				454BF4A9199110DB00D2A1F4 /* MATransporter.m in Sources */,
 				4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */,
 				410F73A119902A09007E8958 /* UIView+CompactConstraint.m in Sources */,
 				45AE35D21982AE7F0007A598 /* MAScreenshot.m in Sources */,
@@ -550,6 +556,7 @@
 		458AAA7919706F2D001A2AA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -571,6 +578,7 @@
 		458AAA7A19706F2D001A2AA1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

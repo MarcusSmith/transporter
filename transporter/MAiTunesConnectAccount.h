@@ -18,6 +18,7 @@
 + (instancetype)accountWithUsername:(NSString *)username;
 
 - (NSString *)password;
-- (void)setPassword:(NSString *)password;
+- (BOOL)setPassword:(NSString *)password error:(NSError **)error;
+- (BOOL)removePasswordWithError:(NSError **)error;
 
 @end

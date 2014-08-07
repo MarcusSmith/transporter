@@ -30,18 +30,25 @@
 - (NSString *)password
 {
     NSError *error;
-    NSString *password = [MAKeychain objectForKey:self.username error:&error];
+    NSString *password = [MAKeychain passwordForUser:self.username error:&error];
     
-    //TODO: Error handling!
+    //TODO: Error handling!?
     return password;
 }
 
-- (void)setPassword:(NSString *)password
+- (BOOL)setPassword:(NSString *)password error:(NSError *__autoreleasing *)error
 {
-    NSError *error;
-    [MAKeychain setObject:password forKey:self.username error:&error];
-    
-    //TODO: Error handling!!
+    return [MAKeychain storePassword:password forUser:self.username error:error];
+}
+
+- (BOOL)removePasswordWithError:(NSError *__autoreleasing *)error
+{
+    return [MAKeychain clearPasswordForUser:self.username error:error];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"u:%@,p:%@,pr:%@,c:%@,m:%@",self.username, self.password, self.providerName, self.certificateName, [super description]];
 }
 
 #pragma mark - NSCoding

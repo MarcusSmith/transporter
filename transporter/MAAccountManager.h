@@ -11,7 +11,7 @@
 
 @interface MAAccountManager : NSObject
 
-+ (NSSet *)iTunesConnectAccounts;
++ (NSMutableSet *)iTunesConnectAccounts;
 + (NSSet *)allUsernames;
 + (NSSet *)allProviderNames;
 
