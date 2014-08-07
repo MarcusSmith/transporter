@@ -33,18 +33,6 @@
     }
 }
 
-- (NSSize)intrinsicContentSize
-{
-    if (self.attributedStringValue.length < 1) return CGSizeMake(0, 0);
-    
-    CGSize size = [self.stringValue sizeWithAttributes:[self.attributedStringValue attributesAtIndex:0 effectiveRange:nil]];
-    
-    size.height += 10.0;
-    size.width += 12.0;
-    
-    return size;
-}
-
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@, %@", [super description], NSStringFromRect(self.frame)];
