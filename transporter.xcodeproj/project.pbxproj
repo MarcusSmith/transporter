@@ -238,7 +238,7 @@
 				4533A05E1982A08E0082C746 /* MainViewController.m */,
 				45EC126B1982D19400DFB39A /* NSData+md5.h */,
 				45EC126C1982D19400DFB39A /* NSData+md5.m */,
-				45BDA4141989418A00DEC41E /* Accounts */,
+				45BDA4141989418A00DEC41E /* iTunesConnect */,
 				45AE35C91982AE1F0007A598 /* AppMetadata */,
 				45BDA4131989379E00DEC41E /* Keychain */,
 				458AAA6219706F2D001A2AA1 /* Images.xcassets */,
@@ -305,7 +305,7 @@
 			name = Keychain;
 			sourceTree = "<group>";
 		};
-		45BDA4141989418A00DEC41E /* Accounts */ = {
+		45BDA4141989418A00DEC41E /* iTunesConnect */ = {
 			isa = PBXGroup;
 			children = (
 				45BDA415198941E800DEC41E /* MAiTunesConnectAccount.h */,
@@ -317,7 +317,7 @@
 				452B40B819954759002F3029 /* NSError+MATransporterErrors.h */,
 				452B40B919954759002F3029 /* NSError+MATransporterErrors.m */,
 			);
-			name = Accounts;
+			name = iTunesConnect;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

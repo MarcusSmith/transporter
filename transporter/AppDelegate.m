@@ -241,6 +241,7 @@
                 
                 MAAppMetadata *appMetadata = [[MAAppMetadata alloc] initWithXML:xmlURL];
                 [account setProviderName:appMetadata.provider];
+                [MAAccountManager saveAccounts];
             }
         }
         else {

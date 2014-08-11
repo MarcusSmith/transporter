@@ -61,7 +61,7 @@ static NSString *iTMSTransporterPath(void)
         NSString *errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
         errorString = [errorString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
-        NSLog(@"Data:\n%@\nError:\n%@", dataString, errorString);
+//        NSLog(@"Data:\n%@\nError:\n%@", dataString, errorString);
         BOOL success = [errorString hasSuffix:@"0"];
         
         // Clean up iTMSTransporter Std Err mess, and convert it into easy to understand NSErrors if possible.
