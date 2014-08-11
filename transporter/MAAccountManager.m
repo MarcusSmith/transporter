@@ -10,18 +10,18 @@
 
 @implementation MAAccountManager
 
-static NSMutableSet *_itunesConnectAccounts;
+static NSMutableArray *_itunesConnectAccounts;
 static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
 
-+ (NSMutableSet *)iTunesConnectAccounts
++ (NSMutableArray *)iTunesConnectAccounts
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:iTunesConnectKey];
-        NSSet *accounts = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        NSArray *accounts = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         
         if (!accounts) {
-            _itunesConnectAccounts = [NSMutableSet set];
+            _itunesConnectAccounts = [NSMutableArray array];
         }
         else {
             _itunesConnectAccounts = accounts.mutableCopy;
@@ -41,10 +41,10 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
 
 + (NSSet *)allUsernames
 {
-    NSSet *accounts = [self iTunesConnectAccounts];
-    NSMutableSet *usernames = [NSMutableSet set];
+    NSArray *accounts = [self iTunesConnectAccounts];
+    NSMutableArray *usernames = [NSMutableArray array];
     
-    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, NSUInteger idx, BOOL *stop) {
         [usernames addObject:account.username];
     }];
     
@@ -53,10 +53,10 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
 
 + (NSSet *)allProviderNames
 {
-    NSSet *accounts = [self iTunesConnectAccounts];
-    NSMutableSet *providers = [NSMutableSet set];
+    NSArray *accounts = [self iTunesConnectAccounts];
+    NSMutableArray *providers = [NSMutableArray array];
     
-    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, NSUInteger idx, BOOL *stop) {
         [providers addObject:account.providerName];
     }];
     
@@ -66,10 +66,10 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
 
 + (MAiTunesConnectAccount *)accountWithUsername:(NSString *)username
 {
-    NSSet *accounts = [self iTunesConnectAccounts];
+    NSArray *accounts = [self iTunesConnectAccounts];
     __block MAiTunesConnectAccount *foundAccount = nil;
     
-    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, NSUInteger idx, BOOL *stop) {
         if ([account.username isEqualToString:username]) {
             foundAccount = account;
             *stop = YES;
@@ -81,10 +81,10 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
 
 + (MAiTunesConnectAccount *)accountWithProviderName:(NSString *)provider
 {
-    NSSet *accounts = [self iTunesConnectAccounts];
+    NSArray *accounts = [self iTunesConnectAccounts];
     __block MAiTunesConnectAccount *foundAccount = nil;
     
-    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, BOOL *stop) {
+    [accounts enumerateObjectsUsingBlock:^(MAiTunesConnectAccount *account, NSUInteger idx, BOOL *stop) {
         if ([account.providerName isEqualToString:provider]) {
             foundAccount = account;
             *stop = YES;
@@ -154,7 +154,7 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
         [account removePasswordWithError:nil];
     }];
     
-    _itunesConnectAccounts = [NSMutableSet set];
+    _itunesConnectAccounts = [NSMutableArray array];
     
     return [self saveAccounts];
 }

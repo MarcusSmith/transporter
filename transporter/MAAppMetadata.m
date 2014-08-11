@@ -31,7 +31,7 @@
         NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
         [parser setDelegate:self];
         BOOL success = [parser parse];
-        NSLog(@"%@", success ? @"XML Success!" : @"XMfaiL");
+        NSLog(@"%@", success ? @"XML Success!" : [NSString stringWithFormat:@"XMfaiL: %@", parser.parserError]);
     }
     
     return self;
@@ -51,7 +51,6 @@
 }
 
 #pragma mark - XML Delegate
-
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
 //    NSLog(@"Did Start Element: %@ with namespaceURI: %@ qualified name: %@ attributes: %@", elementName, namespaceURI, qName, attributeDict);

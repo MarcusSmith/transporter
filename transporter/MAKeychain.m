@@ -209,7 +209,7 @@ NSString * const kServiceName = @"com.MAtransporter";
     
     OSStatus status = SecKeychainAddGenericPassword(NULL, 13, "MATransporter", userLength, userChar, passwordLength, passwordChar, NULL);
     
-    NSLog(@"Store Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
+//    NSLog(@"Store Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
     
     if (status == errSecSuccess) {
         return YES;
@@ -229,7 +229,6 @@ NSString * const kServiceName = @"com.MAtransporter";
 + (BOOL)updatePassword:(NSString *)password forUser:(NSString *)user error:(NSError *__autoreleasing *)error
 {
     SecKeychainItemRef itemRef = [self itemRefForUser:user error:error];
-    NSLog(@"updating with itemRef: %@", itemRef);
     
     const char *passwordChar = [password UTF8String];
     UInt32 passwordLength = (UInt32)strlen(passwordChar);
@@ -238,7 +237,7 @@ NSString * const kServiceName = @"com.MAtransporter";
     
     CFRelease(itemRef);
     
-    NSLog(@"Update Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
+//    NSLog(@"Update Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
     
     if (status == errSecSuccess) {
         return YES;
@@ -273,13 +272,11 @@ NSString * const kServiceName = @"com.MAtransporter";
     
     OSStatus status = SecKeychainFindGenericPassword(NULL, 13, "MATransporter", userLength, userChar, &passwordLength, &passwordData, NULL);
     
-    NSLog(@"Retrieval Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
+//    NSLog(@"Retrieval Status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
     
     NSString *passwordString = [[NSString alloc] initWithBytes:passwordData length:passwordLength encoding:NSStringEncodingConversionAllowLossy];
     
     SecKeychainItemFreeContent(NULL, passwordData);
-    
-    NSLog(@"Password is: %@", passwordString);
     
     return passwordString;
 }
@@ -293,7 +290,7 @@ NSString * const kServiceName = @"com.MAtransporter";
     
     OSStatus status = SecKeychainFindGenericPassword(NULL, 13, "MATransporter", userLength, userChar, NULL, NULL, &itemRef);
     
-    NSLog(@"item ref status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
+//    NSLog(@"item ref status: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
     
     if (status != errSecSuccess) {
         if (error) {
@@ -343,23 +340,5 @@ NSString * const kServiceName = @"com.MAtransporter";
         return NO;
     }
 }
-
-//+ (BOOL)clearOSXKeychainWithError:(NSError *__autoreleasing *)error
-//{
-//    OSStatus status = SecKeychainDelete(NULL);
-//    
-//    NSLog(@"Status of clear all: %@", [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil]);
-//    
-//    if (status == errSecSuccess) {
-//        return YES;
-//    }
-//    else {
-//        if (error) {
-//            *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
-//        }
-//        
-//        return NO;
-//    }
-//}
 
 @end

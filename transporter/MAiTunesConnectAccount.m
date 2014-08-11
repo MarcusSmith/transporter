@@ -48,7 +48,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"u:%@,p:%@,pr:%@,c:%@,m:%@",self.username, self.password, self.providerName, self.certificateName, [super description]];
+    return [NSString stringWithFormat:@"u:%@,p:%@,c:%@,m:%@",self.username, self.providerName, self.certificateName, [super description]];
 }
 
 #pragma mark - NSCoding
@@ -60,6 +60,7 @@
         [self setUsername:[aDecoder decodeObjectForKey:@"username"]];
         [self setProviderName:[aDecoder decodeObjectForKey:@"providerName"]];
         [self setCertificateName:[aDecoder decodeObjectForKey:@"certificateName"]];
+        [self setSKUList:[aDecoder decodeObjectForKey:@"SKUList"]];
     }
     
     return self;
@@ -70,8 +71,7 @@
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.providerName forKey:@"providerName"];
     [aCoder encodeObject:self.certificateName forKey:@"certificateName"];
+    [aCoder encodeObject:self.SKUList forKey:@"SKUList"];
 }
-
-
 
 @end

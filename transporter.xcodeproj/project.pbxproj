@@ -17,6 +17,7 @@
 		410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B219902A7E007E8958 /* MAScreenshotsViewController.m */; };
 		410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 410F73B919902B12007E8958 /* MAAppMetadataDocument.m */; };
 		4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* MAVersion.m */; };
+		452B40BA19954759002F3029 /* NSError+MATransporterErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 452B40B919954759002F3029 /* NSError+MATransporterErrors.m */; };
 		4533A05F1982A08E0082C746 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A05E1982A08E0082C746 /* MainViewController.m */; };
 		454BF4A9199110DB00D2A1F4 /* MATransporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 454BF4A8199110DB00D2A1F4 /* MATransporter.m */; };
 		458AAA4B19706F2D001A2AA1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458AAA4A19706F2D001A2AA1 /* Cocoa.framework */; };
@@ -71,6 +72,8 @@
 		410F73B919902B12007E8958 /* MAAppMetadataDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppMetadataDocument.m; sourceTree = "<group>"; };
 		4519B9EF1982EF7B00D30FC9 /* MAVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVersion.h; sourceTree = "<group>"; };
 		4519B9F01982EF7B00D30FC9 /* MAVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVersion.m; sourceTree = "<group>"; };
+		452B40B819954759002F3029 /* NSError+MATransporterErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+MATransporterErrors.h"; sourceTree = "<group>"; };
+		452B40B919954759002F3029 /* NSError+MATransporterErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+MATransporterErrors.m"; sourceTree = "<group>"; };
 		4533A05D1982A08E0082C746 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		4533A05E1982A08E0082C746 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		454BF4A7199110DB00D2A1F4 /* MATransporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATransporter.h; sourceTree = "<group>"; };
@@ -311,6 +314,8 @@
 				45BDA4191989420300DEC41E /* MAAccountManager.m */,
 				454BF4A7199110DB00D2A1F4 /* MATransporter.h */,
 				454BF4A8199110DB00D2A1F4 /* MATransporter.m */,
+				452B40B819954759002F3029 /* NSError+MATransporterErrors.h */,
+				452B40B919954759002F3029 /* NSError+MATransporterErrors.m */,
 			);
 			name = Accounts;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				410F73A119902A09007E8958 /* UIView+CompactConstraint.m in Sources */,
 				45AE35D21982AE7F0007A598 /* MAScreenshot.m in Sources */,
 				45BDA4121989352B00DEC41E /* NSError+MAKeychainErrors.m in Sources */,
+				452B40BA19954759002F3029 /* NSError+MATransporterErrors.m in Sources */,
 				45AE35D51982AFC30007A598 /* MALocale.m in Sources */,
 				45AE35CC1982AE410007A598 /* MAAppMetadata.m in Sources */,
 				45EC126D1982D19400DFB39A /* NSData+md5.m in Sources */,
