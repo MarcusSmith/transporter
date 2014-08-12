@@ -65,6 +65,9 @@
         NSMenuItem *checkAccountItem = [[NSMenuItem alloc] initWithTitle:@"Check Account" action:@selector(checkAccount) keyEquivalent:@""];
         [accountSubmenu addItem:checkAccountItem];
         
+        NSMenuItem *updateAccountItem = [[NSMenuItem alloc] initWithTitle:@"Update Account" action:@selector(updateAccount) keyEquivalent:@""];
+        [accountSubmenu addItem:updateAccountItem];
+        
         NSMenuItem *removeAccountItem = [[NSMenuItem alloc] initWithTitle:@"Remove Account" action:@selector(removeAccount) keyEquivalent:@""];
         [accountSubmenu addItem:removeAccountItem];
         
@@ -167,6 +170,32 @@
     NSString *username = [input stringValue];
     
     NSLog(@"username: %@, password: %@", username, [[MAAccountManager accountWithUsername:username] password]);
+}
+
+- (void)updateAccount
+{
+    NSLog(@"Update Account");
+    
+    NSAlert *alert = [NSAlert alertWithMessageText: @"Select Account"
+                                     defaultButton:@"OK"
+                                   alternateButton:@"Cancel"
+                                       otherButton:nil
+                         informativeTextWithFormat:@""];
+    
+    NSComboBox *accountComboBox = [[NSComboBox alloc] initWithFrame:NSMakeRect(0, 32, 300, 24)];
+    [accountComboBox setUsesDataSource:NO];
+    [accountComboBox addItemsWithObjectValues:[MAAccountManager allUsernames]];
+    
+    [alert setAccessoryView:accountComboBox];
+    NSInteger button = [alert runModal];
+    if (button != NSAlertDefaultReturn) {
+        return;
+    }
+    
+    NSString *username = (NSString *)[accountComboBox objectValueOfSelectedItem];
+    MAiTunesConnectAccount *account = [MAAccountManager accountWithUsername:username];
+    
+    [MAAccountManager updateAccount:account];
 }
 
 - (void)removeAccount

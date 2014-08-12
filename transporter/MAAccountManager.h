@@ -19,6 +19,7 @@
 + (MAiTunesConnectAccount *)accountWithProviderName:(NSString *)provider;
 
 + (BOOL)addAccount:(MAiTunesConnectAccount *)account;
++ (void)updateAccount:(MAiTunesConnectAccount *)account;
 + (BOOL)saveAccounts;
 
 + (BOOL)removeAccountWithUsername:(NSString *)username;

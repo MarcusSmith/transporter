@@ -60,7 +60,7 @@
         [self setUsername:[aDecoder decodeObjectForKey:@"username"]];
         [self setProviderName:[aDecoder decodeObjectForKey:@"providerName"]];
         [self setCertificateName:[aDecoder decodeObjectForKey:@"certificateName"]];
-        [self setSKUList:[aDecoder decodeObjectForKey:@"SKUList"]];
+        [self setAppleIDList:[aDecoder decodeObjectForKey:@"AppleIDList"]];
     }
     
     return self;
@@ -71,7 +71,7 @@
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.providerName forKey:@"providerName"];
     [aCoder encodeObject:self.certificateName forKey:@"certificateName"];
-    [aCoder encodeObject:self.SKUList forKey:@"SKUList"];
+    [aCoder encodeObject:self.AppleIDList forKey:@"AppleIDList"];
 }
 
 @end

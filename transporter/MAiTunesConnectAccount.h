@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *providerName;
 @property (nonatomic, strong) NSString *certificateName;
-@property (nonatomic, strong) NSArray *SKUList;
+@property (nonatomic, strong) NSArray *AppleIDList;
 
 - (id)initWithUsername:(NSString *)username;
 + (instancetype)accountWithUsername:(NSString *)username;

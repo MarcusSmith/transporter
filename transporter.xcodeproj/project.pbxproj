@@ -37,6 +37,7 @@
 		45BDA4121989352B00DEC41E /* NSError+MAKeychainErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4111989352B00DEC41E /* NSError+MAKeychainErrors.m */; };
 		45BDA417198941E800DEC41E /* MAiTunesConnectAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */; };
 		45BDA41A1989420300DEC41E /* MAAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BDA4191989420300DEC41E /* MAAccountManager.m */; };
+		45CF71471999632300CE0B3A /* MAWebScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = 45CF71461999632300CE0B3A /* MAWebScraper.m */; };
 		45EC126D1982D19400DFB39A /* NSData+md5.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EC126C1982D19400DFB39A /* NSData+md5.m */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,8 @@
 		45BDA416198941E800DEC41E /* MAiTunesConnectAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAiTunesConnectAccount.m; sourceTree = "<group>"; };
 		45BDA4181989420300DEC41E /* MAAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAccountManager.h; sourceTree = "<group>"; };
 		45BDA4191989420300DEC41E /* MAAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAccountManager.m; sourceTree = "<group>"; };
+		45CF71451999632300CE0B3A /* MAWebScraper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAWebScraper.h; sourceTree = "<group>"; };
+		45CF71461999632300CE0B3A /* MAWebScraper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAWebScraper.m; sourceTree = "<group>"; };
 		45EC126B1982D19400DFB39A /* NSData+md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+md5.h"; sourceTree = "<group>"; };
 		45EC126C1982D19400DFB39A /* NSData+md5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+md5.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -316,6 +319,8 @@
 				454BF4A8199110DB00D2A1F4 /* MATransporter.m */,
 				452B40B819954759002F3029 /* NSError+MATransporterErrors.h */,
 				452B40B919954759002F3029 /* NSError+MATransporterErrors.m */,
+				45CF71451999632300CE0B3A /* MAWebScraper.h */,
+				45CF71461999632300CE0B3A /* MAWebScraper.m */,
 			);
 			name = iTunesConnect;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				410F73A019902A09007E8958 /* NSLayoutConstraint+CompactConstraint.m in Sources */,
 				45BDA40C198931C900DEC41E /* MAKeychain.m in Sources */,
 				410F73B519902A7E007E8958 /* MAScreenshotsViewController.m in Sources */,
+				45CF71471999632300CE0B3A /* MAWebScraper.m in Sources */,
 				410F73BA19902B12007E8958 /* MAAppMetadataDocument.m in Sources */,
 				454BF4A9199110DB00D2A1F4 /* MATransporter.m in Sources */,
 				4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */,

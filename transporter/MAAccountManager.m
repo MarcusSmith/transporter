@@ -7,6 +7,9 @@
 //
 
 #import "MAAccountManager.h"
+#import "MAWebScraper.h"
+#import "MATransporter.h"
+#import "MAAppMetadata.h"
 
 @implementation MAAccountManager
 
@@ -30,13 +33,6 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
     });
     
     return _itunesConnectAccounts;
-}
-
-+ (BOOL)saveAccounts
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_itunesConnectAccounts.copy];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:iTunesConnectKey];
-    return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSSet *)allUsernames
@@ -106,6 +102,37 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
     [[self iTunesConnectAccounts] addObject:account];
     
     return [self saveAccounts];
+}
+
++ (void)updateAccount:(MAiTunesConnectAccount *)account
+{
+    // TODO: Webscrape to get full list of AppleIDs for account
+    NSArray *appleIDs = [MAWebScraper appleIDsForAccount:account];
+    [account setAppleIDList:appleIDs];
+    [self saveAccounts];
+    
+    // TODO: If account doesn't have provider name, pull iTMS package for first SKU, and get provider name from metadata
+    if (!account.providerName && account.AppleIDList.count > 0) {
+        [MATransporter retrieveMetadataForAccount:account appleID:account.AppleIDList[0] toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
+            if (success) {
+                NSString *packagePath = info[@"packagePath"];
+                NSURL *xmlURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/metadata.xml", packagePath]];
+                
+                MAAppMetadata *appMetadata = [[MAAppMetadata alloc] initWithXML:xmlURL];
+                [account setProviderName:appMetadata.provider];
+                [MAAccountManager saveAccounts];
+                
+                [[NSFileManager defaultManager] removeItemAtPath:packagePath error:nil];
+            }
+        }];
+    }
+}
+
++ (BOOL)saveAccounts
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_itunesConnectAccounts.copy];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:iTunesConnectKey];
+    return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (BOOL)removeAccountWithUsername:(NSString *)username
