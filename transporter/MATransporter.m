@@ -29,6 +29,8 @@ static NSString *iTMSTransporterPath(void)
 
 + (void)launchTransporterWithArguments:(NSArray *)arguments info:(NSDictionary *)info completion:(MATransporterCompletion)completion
 {
+    // TODO: Show Loading indicator
+    
     __block NSDictionary *blockSafeInfo = info;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, (unsigned long)NULL), ^(void) {
@@ -116,6 +118,8 @@ static NSString *iTMSTransporterPath(void)
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            // TODO: Hide loading indicator
+            
             completion(success, blockSafeInfo, error);
         });
     });

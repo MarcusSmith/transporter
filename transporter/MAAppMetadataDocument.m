@@ -16,10 +16,7 @@
 
 @property (nonatomic, strong) MAAppMetaDataWindowController *windowController;
 
-@property (nonatomic, strong) MAAppMetadata *model;
-
 @end
-
 
 
 @implementation MAAppMetadataDocument
@@ -63,19 +60,46 @@
     return nil;
 }
 
+//- (void)saveDocumentWithDelegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo
+//{
+//    NSSavePanel *savePanel = [NSSavePanel savePanel];
+//    
+//    [savePanel setTitle:@"Save changes as:"];
+//    
+//    NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"matp", @"MATP", nil];
+//    [savePanel setAllowedFileTypes:fileTypes];
+//    [savePanel setAllowsOtherFileTypes:NO];
+//    
+//    NSInteger button = [savePanel runModal];
+//    if (button == NSFileHandlingPanelOKButton){
+//        NSURL *saveURL = [[savePanel directoryURL] URLByAppendingPathComponent:[savePanel nameFieldStringValue]];
+//        if ([saveURL.pathExtension isCaseInsensitiveLike:@"matp"]) {
+//            NSLog(@"Valid extension");
+//        }
+//        else {
+//            NSLog(@"Invalid extension, adding .matp");
+//            saveURL = [saveURL URLByAppendingPathExtension:@"matp"];
+//        }
+//        
+//        NSLog(@"Should save as:%@", saveURL.path);
+//        
+//        //TODO: DO THIS!!
+//    }
+//}
+
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
     if (fileWrapper.isDirectory) {
         [fileWrapper.fileWrappers enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSFileWrapper *wrapper, BOOL *stop) {
             if (wrapper.isRegularFile && [wrapper.preferredFilename hasSuffix:@"xml"]) {
-                self.model = [[MAAppMetadata alloc] initWithXMLData:wrapper.regularFileContents];
-                if (self.model) {
+                self.original = [[MAAppMetadata alloc] initWithXMLData:wrapper.regularFileContents];
+                if (self.original) {
                     *stop = YES;
                 }
             }
         }];
         
-        return (self.model) ? YES : NO;
+        return (self.original) ? YES : NO;
     }
     
     return NO;
@@ -95,6 +119,49 @@
 + (BOOL)autosavesInPlace
 {
     return YES;
+}
+
+#pragma mark - properties
+
+- (void)setOriginal:(MAAppMetadata *)original
+{
+    _original = original;
+    
+    if (!self.changes) {
+        [self setChanges:original.copy];
+    }
+}
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        [self setOriginal:[aDecoder decodeObjectForKey:@"original"]];
+        [self setChanges:[aDecoder decodeObjectForKey:@"changes"]];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.original forKey:@"original"];
+    [aCoder encodeObject:self.changes forKey:@"changes"];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MAAppMetadataDocument *copy = [[MAAppMetadataDocument alloc] init];
+    
+    [copy setOriginal:self.original];
+    [copy setChanges:self.changes];
+    
+    return copy;
 }
 
 @end

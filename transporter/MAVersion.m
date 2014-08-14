@@ -46,4 +46,38 @@
     return root;
 }
 
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        [self setVersionString:[aDecoder decodeObjectForKey:@"versionString"]];
+        [self setLocales:[aDecoder decodeObjectForKey:@"locales"]];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.versionString forKey:@"versionString"];
+    [aCoder encodeObject:self.locales forKey:@"locales"];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MAVersion *copy = [[MAVersion alloc] init];
+    
+    [copy setVersionString:self.versionString.copy];
+    
+    NSArray *localesCopy = [[NSArray alloc] initWithArray:self.locales copyItems:YES];
+    [copy setLocales:localesCopy];
+    
+    return copy;
+}
+
 @end

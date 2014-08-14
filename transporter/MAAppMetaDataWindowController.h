@@ -10,4 +10,17 @@
 
 @interface MAAppMetaDataWindowController : NSWindowController
 
+// This method exists just to see if a document is open or not
+- (void)documentIsOpen;
+
+// Import options
+- (void)importFromFile;
+- (void)importFromiTunesConnect;
+- (void)importChangesFromZip;
+
+// Export options
+- (void)exportToFile;
+- (void)submitToiTunesConnect;
+- (void)verifyWithiTunesConnect;
+
 @end

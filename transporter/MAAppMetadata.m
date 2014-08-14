@@ -23,7 +23,9 @@
 
 - (id)initWithXML:(NSURL *)xmlURL
 {
-    NSAssert([[xmlURL pathExtension] isEqualToString:@"xml"], @"initWithXML method can only be called on an xml file");
+    if (![[xmlURL pathExtension] isCaseInsensitiveLike:@"xml"]) {
+        return nil;
+    }
     
     self = [super init];
     
@@ -31,7 +33,11 @@
         NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
         [parser setDelegate:self];
         BOOL success = [parser parse];
+        
         NSLog(@"%@", success ? @"XML Success!" : [NSString stringWithFormat:@"XMfaiL: %@", parser.parserError]);
+        if (!success) {
+            return nil;
+        }
     }
     
     return self;
@@ -199,6 +205,51 @@
     [document setCharacterEncoding:@"UTF-8"];
     
     return document;
+}
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        [self setPackageDictionary:[aDecoder decodeObjectForKey:@"packageDictionary"]];
+        [self setProvider:[aDecoder decodeObjectForKey:@"provider"]];
+        [self setTeamID:[aDecoder decodeObjectForKey:@"teamID"]];
+        [self setVendorID:[aDecoder decodeObjectForKey:@"vendorID"]];
+        [self setAppleID:[aDecoder decodeObjectForKey:@"appleID"]];
+        [self setVersions:[aDecoder decodeObjectForKey:@"versions"]];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.packageDictionary forKey:@"packageDictionary"];
+    [aCoder encodeObject:self.provider forKey:@"provider"];
+    [aCoder encodeObject:self.teamID forKey:@"teamID"];
+    [aCoder encodeObject:self.vendorID forKey:@"vendorID"];
+    [aCoder encodeObject:self.appleID forKey:@"appleID"];
+    [aCoder encodeObject:self.versions forKey:@"versions"];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MAAppMetadata *copy = [[MAAppMetadata alloc] init];
+    
+    [copy setPackageDictionary:self.packageDictionary.copy];
+    [copy setProvider:self.provider.copy];
+    [copy setTeamID:self.teamID.copy];
+    [copy setVendorID:self.vendorID.copy];
+    [copy setAppleID:self.appleID.copy];
+    NSArray *versionsCopy = [[NSArray alloc] initWithArray:self.versions copyItems:YES];
+    [copy setVersions:versionsCopy];
+    
+    return copy;
 }
 
 @end

@@ -102,4 +102,62 @@
     return root;
 }
 
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        [self setName:[aDecoder decodeObjectForKey:@"name"]];
+        [self setTitle:[aDecoder decodeObjectForKey:@"title"]];
+        [self setLocalDescription:[aDecoder decodeObjectForKey:@"localDescription"]];
+        [self setKeywords:[aDecoder decodeObjectForKey:@"keywords"]];
+        [self setWhatsNew:[aDecoder decodeObjectForKey:@"whatsNew"]];
+        [self setSoftwareURL:[aDecoder decodeObjectForKey:@"softwareURL"]];
+        [self setPrivacyURL:[aDecoder decodeObjectForKey:@"privacyURL"]];
+        [self setSupportURL:[aDecoder decodeObjectForKey:@"supportURL"]];
+        [self setScreenshots:[aDecoder decodeObjectForKey:@"screenshots"]];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.title forKey:@"title"];
+    [aCoder encodeObject:self.localDescription forKey:@"localDescription"];
+    [aCoder encodeObject:self.keywords forKey:@"keywords"];
+    [aCoder encodeObject:self.whatsNew forKey:@"whatsNew"];
+    [aCoder encodeObject:self.softwareURL forKey:@"softwareURL"];
+    [aCoder encodeObject:self.privacyURL forKey:@"privacyURL"];
+    [aCoder encodeObject:self.supportURL forKey:@"supportURL"];
+    [aCoder encodeObject:self.screenshots forKey:@"screenshots"];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MALocale *copy = [[MALocale alloc] init];
+    
+    [copy setName:self.name.copy];
+    [copy setTitle:self.title.copy];
+    [copy setLocalDescription:self.localDescription.copy];
+    
+    NSArray *keywordsCopy = [[NSArray alloc] initWithArray:self.keywords copyItems:YES];
+    [copy setKeywords:keywordsCopy];
+    
+    [copy setWhatsNew:self.whatsNew.copy];
+    [copy setSoftwareURL:self.softwareURL.copy];
+    [copy setPrivacyURL:self.privacyURL.copy];
+    [copy setSupportURL:self.supportURL.copy];
+    
+    NSArray *screenshotsCopy = [[NSArray alloc] initWithArray:self.screenshots copyItems:YES];
+    [copy setScreenshots:screenshotsCopy];
+    
+    return copy;
+}
+
 @end

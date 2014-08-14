@@ -20,6 +20,9 @@
 
 #import "CompactConstraint.h"
 
+#import "MATransporter.h"
+#import "MAAccountManager.h"
+
 @interface MAAppMetaDataWindowController ()<NSWindowDelegate>
 
 @property (nonatomic, strong, readonly) MAAppMetadataDocument *metaDataDocument;
@@ -113,9 +116,17 @@
     
     [super setDocument:document];
     
-    MAAppMetadataDocument *metaDoc = document;
-    
-    self.versionsController = [[NSArrayController alloc] initWithContent:metaDoc.model.versions];
+    [self updateUIBindings];
+}
+
+- (MAAppMetadataDocument *)metaDataDocument
+{
+    return self.document;
+}
+
+- (void)updateUIBindings
+{
+    self.versionsController = [[NSArrayController alloc] initWithContent:self.metaDataDocument.changes.versions];
     [self.popUpForVersions bind:@"content" toObject:self.versionsController withKeyPath:@"arrangedObjects" options:nil];
     [self.popUpForVersions bind:@"contentValues" toObject:self.versionsController withKeyPath:@"arrangedObjects.versionString" options:nil];
     [self.popUpForVersions bind:@"selectedIndex" toObject:self.versionsController withKeyPath:@"selectionIndex" options:nil];
@@ -123,11 +134,12 @@
     [self.popUpForLocales bind:@"content" toObject:self.localesController withKeyPath:@"arrangedObjects" options:nil];
     [self.popUpForLocales bind:@"contentValues" toObject:self.localesController withKeyPath:@"arrangedObjects.name" options:nil];
     [self.popUpForLocales bind:@"selectedIndex" toObject:self.localesController withKeyPath:@"selectionIndex" options:nil];
-
-    [self.textFieldForAppleID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"appleID" options:nil];
-    [self.textFieldForProvider bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"provider" options:nil];
-    [self.textFieldForTeamID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"teamID" options:nil];
-    [self.textFieldForVendorID bind:@"stringValue" toObject:metaDoc.model withKeyPath:@"vendorID" options:nil];
+    
+    // TODO: Make these fields not editable.
+    [self.textFieldForAppleID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"appleID" options:nil];
+    [self.textFieldForProvider bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"provider" options:nil];
+    [self.textFieldForTeamID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"teamID" options:nil];
+    [self.textFieldForVendorID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"vendorID" options:nil];
     
     if (self.popUpForVersions.itemArray.count > 0) {
         [self.popUpForVersions selectItemAtIndex:0];
@@ -141,11 +153,6 @@
     }
 }
 
-- (MAAppMetadataDocument *)metaDataDocument
-{
-    return self.document;
-}
-
 - (void)popUpMenuChanged:(NSPopUpButton *)popUp
 {
     if (popUp == self.popUpForVersions) {
@@ -156,6 +163,165 @@
     {
         self.localeViewController.locale = self.localesController.arrangedObjects[self.localesController.selectionIndex];
     }
+}
+
+#pragma mark - Importing & Exporting
+
+- (void)documentIsOpen
+{
+    // This method intentionally left blank
+}
+
+- (void)importFromFile
+{
+    // Pop up open file panel, select xml or itmsp
+    NSOpenPanel* dlg =[NSOpenPanel openPanel];
+    [dlg setTitle:@"Select an iTMS package or xml file"];
+    [dlg setCanChooseFiles:YES];
+    [dlg setCanChooseDirectories:NO];
+    [dlg setAllowsMultipleSelection:NO];
+    
+    NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"itmsp", @"ITMSP", @"xml", @"XML", nil];
+    [dlg setAllowedFileTypes:fileTypes];
+    
+    NSInteger button = [dlg runModal];
+    if (button != NSFileHandlingPanelOKButton){
+        return;
+    }
+    
+    NSURL *chosenURL = [[dlg URLs] objectAtIndex:0];
+    
+    if ([chosenURL.pathExtension isCaseInsensitiveLike:@"itmsp"]) {
+        chosenURL = [chosenURL URLByAppendingPathComponent:@"metadata.xml"];
+    }
+    
+    // Convert to AppMetadata
+    MAAppMetadata *original = [[MAAppMetadata alloc] initWithXML:chosenURL];
+    
+    if (!original) {
+        NSLog(@"import error!");
+        return;
+    }
+    
+    // Check to make sure provider name matches document (if it already has an original).
+    if (self.metaDataDocument.original && ![self.metaDataDocument.original.appleID isEqualToString:original.appleID]) {
+        // Pop up alert to let them know this file doesn't match the original
+        NSAlert *alert = [NSAlert alertWithMessageText: @"The selected file's Apple ID does not match the app's Apple ID.  Are you sure you want to continue?"
+                                         defaultButton:@"OK"
+                                       alternateButton:@"Cancel"
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+        
+        NSInteger button = [alert runModal];
+        if (button != NSAlertDefaultReturn) {
+            return;
+        }
+    }
+    
+    // Save as the document's "original" metadata
+    [self.metaDataDocument setOriginal:original];
+    
+    [self updateUIBindings];
+}
+
+- (void)importFromiTunesConnect
+{
+    NSLog(@"Import from iTunes Connect");
+    
+    NSAlert *alert = [NSAlert alertWithMessageText: @"Enter select account and SKU"
+                                     defaultButton:@"OK"
+                                   alternateButton:@"Cancel"
+                                       otherButton:nil
+                         informativeTextWithFormat:@""];
+    
+    NSView *contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 300, 56)];
+    
+    NSComboBox *accountComboBox = [[NSComboBox alloc] initWithFrame:NSMakeRect(0, 32, 300, 24)];
+    [accountComboBox setUsesDataSource:NO];
+    [accountComboBox addItemsWithObjectValues:[MAAccountManager allUsernames]];
+    
+    NSTextField *AppleIDTextBox = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
+    [[AppleIDTextBox cell] setPlaceholderString:@"Apple ID"];
+    
+    [contentView addSubview:accountComboBox];
+    [contentView addSubview:AppleIDTextBox];
+    
+    [alert setAccessoryView:contentView];
+    NSInteger button = [alert runModal];
+    if (button != NSAlertDefaultReturn) {
+        return;
+    }
+    
+    [AppleIDTextBox validateEditing];
+    
+    NSString *username = (NSString *)[accountComboBox objectValueOfSelectedItem];
+    NSString *appleID = (NSString *)[AppleIDTextBox stringValue];
+    
+    NSLog(@"Account: %@, AppleID: %@", username, appleID);
+    
+    [MATransporter retrieveMetadataForAccount:[MAAccountManager accountWithUsername:username] appleID:appleID toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        NSLog(@"Info Dict: %@", info);
+        if (success) {
+            NSString *packagePath = info[@"packagePath"];
+            NSURL *xmlURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/metadata.xml", packagePath]];
+            
+            MAAppMetadata *original = [[MAAppMetadata alloc] initWithXML:xmlURL];
+            
+            if (!original) {
+                NSLog(@"import error!");
+                return;
+            }
+            
+            // Check to make sure provider name matches document (if it already has an original).
+            if (self.metaDataDocument.original && ![self.metaDataDocument.original.appleID isEqualToString:original.appleID]) {
+                // Pop up alert to let them know this file doesn't match the original
+                NSAlert *alert = [NSAlert alertWithMessageText: @"The selected file's Apple ID does not match the app's Apple ID.  Are you sure you want to continue?"
+                                                 defaultButton:@"OK"
+                                               alternateButton:@"Cancel"
+                                                   otherButton:nil
+                                     informativeTextWithFormat:@""];
+                
+                NSInteger button = [alert runModal];
+                if (button != NSAlertDefaultReturn) {
+                    return;
+                }
+            }
+            
+            // Save as the document's "original" metadata
+            [self.metaDataDocument setOriginal:original];
+            
+            [[NSFileManager defaultManager] removeItemAtPath:packagePath error:nil];
+            
+            [self updateUIBindings];
+        }
+        else {
+            NSLog(@"transporter unsuccessful: %@", error);
+        }
+    }];
+    
+    
+    
+}
+
+- (void)importChangesFromZip
+{
+    
+    NSLog(@"Import changes from zip file");
+}
+
+- (void)exportToFile
+{
+    
+}
+
+- (void)verifyWithiTunesConnect
+{
+    
+}
+
+- (void)submitToiTunesConnect
+{
+    
 }
 
 #pragma mark - Accessors

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MAVersion.h"
 
-@interface MAAppMetadata : NSObject <NSXMLParserDelegate>
+@interface MAAppMetadata : NSObject <NSXMLParserDelegate, NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSDictionary *packageDictionary;
 @property (nonatomic, strong) NSString *provider;

@@ -29,6 +29,8 @@
         NSImage *imageForSize = [[NSImage alloc] initWithData:imageData];
         [self setDisplayTarget:[self displayTargetForSize:imageForSize.size]];
         
+        [self setFileURL:fileURL];
+        
         imageData = nil;
         imageForSize = nil;
     }
@@ -82,6 +84,50 @@
     [root addChild:checksum];
     
     return root;
+}
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        [self setDisplayTarget:[aDecoder decodeObjectForKey:@"displayTarget"]];
+        [self setPosition:[aDecoder decodeIntegerForKey:@"position"]];
+        [self setSize:[aDecoder decodeObjectForKey:@"size"]];
+        [self setFileName:[aDecoder decodeObjectForKey:@"fileName"]];
+        [self setChecksum:[aDecoder decodeObjectForKey:@"checksum"]];
+        [self setFileURL:[aDecoder decodeObjectForKey:@"fileURL"]];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.displayTarget forKey:@"displayTarget"];
+    [aCoder encodeInteger:self.position forKey:@"position"];
+    [aCoder encodeObject:self.size forKey:@"size"];
+    [aCoder encodeObject:self.fileName forKey:@"fileName"];
+    [aCoder encodeObject:self.checksum forKey:@"checksum"];
+    [aCoder encodeObject:self.fileURL forKey:@"fileURL"];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MAScreenshot *copy = [[MAScreenshot alloc] init];
+    
+    [copy setDisplayTarget:self.displayTarget.copy];
+    [copy setPosition:self.position];
+    [copy setSize:self.size.copy];
+    [copy setFileName:self.fileName.copy];
+    [copy setChecksum:self.checksum.copy];
+    [copy setFileURL:self.fileURL.copy];
+    
+    return copy;
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MAScreenshot.h"
 
-@interface MALocale : NSObject
+@interface MALocale : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *title;

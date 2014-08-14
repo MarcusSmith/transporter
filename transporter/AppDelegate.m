@@ -12,10 +12,15 @@
 #import "MAKeychain.h"
 #import "MATransporter.h"
 #import "MAAppMetadata.h"
+#import "MAAppMetaDataWindowController.h"
+#import "MAHidingMenu.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) NSDocumentController *documentController;
+@property (nonatomic, strong) MAHidingMenu *importMenu;
+@property (nonatomic, strong) MAHidingMenu *exportMenu;
+
 @property (nonatomic, strong) NSMenuItem *testMenu;
 
 @end
@@ -35,6 +40,17 @@
 {
     NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
     
+    NSMenu *fileMenu = [[mainMenu itemAtIndex:1] submenu];
+    
+    [fileMenu insertItem:self.importMenu atIndex:3];
+    [fileMenu insertItem:self.exportMenu atIndex:4];
+    
+//    [fileMenu.itemArray enumerateObjectsUsingBlock:^(NSMenuItem *item, NSUInteger idx, BOOL *stop) {
+//        NSLog(@"%@", item.title);
+//    }];
+//
+//    [fileMenu removeItemAtIndex:1];
+    
     [mainMenu insertItem:self.testMenu atIndex:2];
 }
 
@@ -43,6 +59,50 @@
 {
     return [NSDocumentController sharedDocumentController];
 }
+
+#pragma mark - Menus
+
+- (MAHidingMenu *)importMenu
+{
+    if (!_importMenu) {
+        _importMenu = [[MAHidingMenu alloc] initWithTitle:@"Import" action:@selector(documentIsOpen) keyEquivalent:@""];
+        NSMenu *importSubmenu = [[NSMenu alloc] init];
+        [_importMenu setSubmenu:importSubmenu];
+        
+        NSMenuItem *fromFileItem = [[NSMenuItem alloc] initWithTitle:@"From File..." action:@selector(importFromFile) keyEquivalent:@""];
+        [importSubmenu addItem:fromFileItem];
+        
+        NSMenuItem *iTCItem = [[NSMenuItem alloc] initWithTitle:@"Metadata from iTunesConnect..." action:@selector(importFromiTunesConnect) keyEquivalent:@""];
+        [importSubmenu addItem:iTCItem];
+        
+        NSMenuItem *changeItem = [[NSMenuItem alloc] initWithTitle:@"Changes from Zip File..." action:@selector(importChangesFromZip) keyEquivalent:@""];
+        [importSubmenu addItem:changeItem];
+    }
+    
+    return _importMenu;
+}
+
+- (MAHidingMenu *)exportMenu
+{
+    if (!_exportMenu) {
+        _exportMenu = [[MAHidingMenu alloc] initWithTitle:@"Export" action:@selector(documentIsOpen) keyEquivalent:@""];
+        NSMenu *exportSubmenu = [[NSMenu alloc] init];
+        [_exportMenu setSubmenu:exportSubmenu];
+        
+        NSMenuItem *toFileItem = [[NSMenuItem alloc] initWithTitle:@"To File..." action:@selector(exportToFile) keyEquivalent:@""];
+        [exportSubmenu addItem:toFileItem];
+        
+        NSMenuItem *verifyItem = [[NSMenuItem alloc] initWithTitle:@"Validate with iTunesConnect" action:@selector(verifyWithiTunesConnect) keyEquivalent:@""];
+        [exportSubmenu addItem:verifyItem];
+        
+        NSMenuItem *submitItem = [[NSMenuItem alloc] initWithTitle:@"Submit to iTunesConnect" action:@selector(submitToiTunesConnect) keyEquivalent:@""];
+        [exportSubmenu addItem:submitItem];
+    }
+    
+    return _exportMenu;
+}
+
+
 
 #pragma mark - Marcus tests
 

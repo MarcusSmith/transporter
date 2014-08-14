@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 @class MAAppMetadata;
 
-@interface MAAppMetadataDocument : NSDocument
+@interface MAAppMetadataDocument : NSDocument <NSCoding, NSCopying>
 
-@property (nonatomic, strong, readonly) MAAppMetadata *model;
+@property (nonatomic, strong) MAAppMetadata *original;
+@property (nonatomic, strong) MAAppMetadata *changes;
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MALocale.h"
 
-@interface MAVersion : NSObject
+@interface MAVersion : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *versionString;
 @property (nonatomic, strong) NSArray *locales;
