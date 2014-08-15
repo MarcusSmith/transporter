@@ -252,4 +252,16 @@
     return copy;
 }
 
+#pragma mark - Description
+- (NSString *)description
+{
+    NSString *descriptionString = [NSString stringWithFormat:@"\nProvider: %@, \nteamID: %@, \nvendorID: %@, \nappleID: %@", self.provider, self.teamID, self.vendorID, self.appleID];
+    
+    for (MAVersion *version in self.versions) {
+        descriptionString = [descriptionString stringByAppendingString:[NSString stringWithFormat:@"\n%@", version]];
+    }
+    
+    return descriptionString;
+}
+
 @end

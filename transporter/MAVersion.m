@@ -80,4 +80,14 @@
     return copy;
 }
 
+#pragma mark - Description
+- (NSString *)description
+{
+    NSString *descriptionString = [NSString stringWithFormat:@"\n Version: %@", self.versionString];
+    for (MALocale *locale in self.locales) {
+        descriptionString = [descriptionString stringByAppendingString:[NSString stringWithFormat:@"\n%@", locale]];
+    }
+    return descriptionString;
+}
+
 @end

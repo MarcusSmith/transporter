@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class Locale;
+@class MALocale;
 
 @interface MALocaleViewController : NSViewController
 
-@property (nonatomic, strong) Locale *locale;
+@property (nonatomic, strong) MALocale *locale;
 
 @end

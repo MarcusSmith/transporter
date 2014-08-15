@@ -160,4 +160,10 @@
     return copy;
 }
 
+#pragma mark - Description
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Name: %@ \nTitle: %@ \nDescription: %@ \nKeywords: %@ \nWhat's New: %@ \nSoftwareURL: %@ \nPrivacyURL: %@ \nSupportURL: %@ \nScreenshots: %@", self.name, self.title, self.localDescription, self.keywords, self.whatsNew, self.softwareURL, self.privacyURL, self.supportURL, self.screenshots];
+}
+
 @end

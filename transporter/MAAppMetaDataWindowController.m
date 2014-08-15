@@ -14,6 +14,7 @@
 
 #import "MAAppMetadata.h"
 #import "MAVersion.h"
+#import "MALocale.h"
 
 #import "MATextField.h"
 #import "MALabel.h"
@@ -136,10 +137,10 @@
     [self.popUpForLocales bind:@"selectedIndex" toObject:self.localesController withKeyPath:@"selectionIndex" options:nil];
     
     // TODO: Make these fields not editable.
-    [self.textFieldForAppleID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"appleID" options:nil];
-    [self.textFieldForProvider bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"provider" options:nil];
-    [self.textFieldForTeamID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"teamID" options:nil];
-    [self.textFieldForVendorID bind:@"stringValue" toObject:self.metaDataDocument.original withKeyPath:@"vendorID" options:nil];
+    [self.textFieldForAppleID bind:@"value" toObject:self.metaDataDocument.original withKeyPath:@"appleID" options:nil];
+    [self.textFieldForProvider bind:@"value" toObject:self.metaDataDocument.original withKeyPath:@"provider" options:nil];
+    [self.textFieldForTeamID bind:@"value" toObject:self.metaDataDocument.original withKeyPath:@"teamID" options:nil];
+    [self.textFieldForVendorID bind:@"value" toObject:self.metaDataDocument.original withKeyPath:@"vendorID" options:nil];
     
     if (self.popUpForVersions.itemArray.count > 0) {
         [self.popUpForVersions selectItemAtIndex:0];
@@ -311,7 +312,7 @@
 
 - (void)exportToFile
 {
-    
+    NSLog(@"%@", self.metaDataDocument);
 }
 
 - (void)verifyWithiTunesConnect
@@ -345,6 +346,7 @@
 - (MATextField *)textFieldForAppleID {
     if (!_textFieldForAppleID) {
         _textFieldForAppleID = [self newTextField];
+        [_textFieldForAppleID setEditable:NO];
     }
     return _textFieldForAppleID;
 }
@@ -352,6 +354,7 @@
 - (MATextField *)textFieldForProvider {
     if (!_textFieldForProvider) {
         _textFieldForProvider = [self newTextField];
+        [_textFieldForProvider setEditable:NO];
     }
     return _textFieldForProvider;
 }
@@ -359,6 +362,7 @@
 - (MATextField *)textFieldForTeamID {
     if (!_textFieldForTeamID) {
         _textFieldForTeamID = [self newTextField];
+        [_textFieldForTeamID setEditable:NO];
     }
     return _textFieldForTeamID;
 }
@@ -366,6 +370,7 @@
 - (MATextField *)textFieldForVendorID {
     if (!_textFieldForVendorID) {
         _textFieldForVendorID = [self newTextField];
+        [_textFieldForVendorID setEditable:NO];
     }
     return _textFieldForVendorID;
 }

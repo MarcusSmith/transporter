@@ -164,4 +164,10 @@
     return copy;
 }
 
+#pragma mark - Description
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"\n******************************************************____CHANGES____******************************************************\n%@\n\n\n\n\n\n\n\n\n\n\n\n\n\n******************************************************____ORIGINAL____******************************************************\n%@", self.changes, self.original];
+}
+
 @end

@@ -11,7 +11,7 @@
 #import "MALabel.h"
 #import "MATextField.h"
 
-#import "Locale.h"
+#import "MALocale.h"
 
 #import "MAScreenshotsViewController.h"
 
@@ -103,16 +103,16 @@
 }
 
 #pragma mark - Accessors
-- (void)setLocale:(Locale *)locale
+- (void)setLocale:(MALocale *)locale
 {
     _locale = locale;
 
-    [self.textFieldForTitle bind:@"stringValue" toObject:locale withKeyPath:@"title" options:nil];
-    [self.textFieldForLocalDescription bind:@"stringValue" toObject:locale withKeyPath:@"localDescription" options:nil];
-    [self.textFieldForWhatsNew bind:@"stringValue" toObject:locale withKeyPath:@"whatsNew" options:nil];
-    [self.textFieldForSoftwareURL bind:@"stringValue" toObject:locale withKeyPath:@"softwareURL" options:nil];
-    [self.textFieldForPrivacyURL bind:@"stringValue" toObject:locale withKeyPath:@"privacyURL" options:nil];
-    [self.textFieldForSupportURL bind:@"stringValue" toObject:locale withKeyPath:@"supportURL" options:nil];
+    [self.textFieldForTitle bind:@"value" toObject:locale withKeyPath:@"title" options:nil];
+    [self.textFieldForLocalDescription bind:@"value" toObject:locale withKeyPath:@"localDescription" options:nil];
+    [self.textFieldForWhatsNew bind:@"value" toObject:locale withKeyPath:@"whatsNew" options:nil];
+    [self.textFieldForSoftwareURL bind:@"value" toObject:locale withKeyPath:@"softwareURL" options:nil];
+    [self.textFieldForPrivacyURL bind:@"value" toObject:locale withKeyPath:@"privacyURL" options:nil];
+    [self.textFieldForSupportURL bind:@"value" toObject:locale withKeyPath:@"supportURL" options:nil];
 }
 
 #pragma mark - Views
