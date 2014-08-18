@@ -38,7 +38,7 @@
     return self;
 }
 
-- (instancetype)screenshotFromImageFile:(NSURL *)fileURL
++ (instancetype)screenshotFromImageFile:(NSURL *)fileURL
 {
     return [[[self class] alloc] initWithImageFile:fileURL];
 }

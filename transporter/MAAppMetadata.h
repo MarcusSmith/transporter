@@ -19,8 +19,8 @@
 @property (nonatomic, strong) NSArray *versions;
 
 - (id)initWithXML:(NSURL *)xmlURL;
-- (NSXMLDocument *)NSXMLDocumentRepresentation;
-
 - (id)initWithXMLData:(NSData *)data;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
+- (NSXMLDocument *)NSXMLDocumentRepresentation;
 @end

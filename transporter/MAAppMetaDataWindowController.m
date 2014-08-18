@@ -304,10 +304,70 @@
     
 }
 
-- (void)importChangesFromZip
+- (void)importChangesFromDirectory
 {
+    NSOpenPanel* openPanel =[NSOpenPanel openPanel];
+    [openPanel setTitle:@"Select changes directory"];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setCanChooseDirectories:YES];
     
-    NSLog(@"Import changes from zip file");
+    NSInteger button = [openPanel runModal];
+    if (button != NSFileHandlingPanelOKButton){
+        return;
+    }
+    
+    NSURL *chosenURL = [openPanel URL];
+    NSLog(@"Chosen URL: %@", chosenURL.path);
+    NSString *jsonPath = [[chosenURL URLByAppendingPathComponent:@"json"] path];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:jsonPath]) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"Directory is missing json file"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+        
+        [alert runModal];
+        return;
+    }
+    
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+    
+    NSError *jsonError;
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&jsonError];
+    
+    if (jsonError) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"Error reading JSON file"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+        
+        [alert runModal];
+        return;
+    }
+    
+    NSMutableDictionary *mutableJsonDict = jsonDict.mutableCopy;
+    [mutableJsonDict setObject:chosenURL.path forKey:@"screenshotDirectory"];
+    jsonDict = mutableJsonDict.copy;
+    
+    MAAppMetadata *importedChanges = [[MAAppMetadata alloc] initWithDictionary:jsonDict];
+    
+    if (!importedChanges) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"Error importing JSON"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+        
+        [alert runModal];
+        return;
+    }
+    
+    [self.metaDataDocument setChanges:importedChanges];
+    
+    [self updateUIBindings];
 }
 
 - (void)exportToFile

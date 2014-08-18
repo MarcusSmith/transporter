@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSURL *fileURL;
 
 - (id)initWithImageFile:(NSURL *)fileURL;
-- (instancetype)screenshotFromImageFile:(NSURL *)fileURL;
++ (instancetype)screenshotFromImageFile:(NSURL *)fileURL;
 
 - (NSXMLElement *)NSXMLElementRepresentation;
 

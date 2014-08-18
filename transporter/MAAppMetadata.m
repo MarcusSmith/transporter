@@ -8,6 +8,14 @@
 
 #import "MAAppMetadata.h"
 
+id MANilNullCheck(id object) {
+    if (object == [NSNull null] || [object isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
+    
+    return object;
+}
+
 @interface MAAppMetadata ()
 {
     NSString *xmlString;
@@ -46,12 +54,104 @@
 - (id)initWithXMLData:(NSData *)data
 {
     self = [super init];
-    if (!self) return nil;
     
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-    [parser setDelegate:self];
+    if (self) {
+        NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+        [parser setDelegate:self];
+        BOOL success = [parser parse];
+        
+        NSLog(@"%@", success ? @"XML Success!" : [NSString stringWithFormat:@"XMfaiL: %@", parser.parserError]);
+        if (!success) {
+            return nil;
+        }
+    }
     
-    [parser parse];
+    return self;
+}
+
+- (id)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [super init];
+    
+    if (self) {
+        __block MAVersion *version = [[MAVersion alloc] init];
+        
+        NSString *versionString = dictionary[@"version"];
+        NSString *screenshotDirectory = dictionary[@"screenshotDirectory"];
+        
+        if (!versionString) {
+            return nil;
+        }
+        
+        [version setVersionString:versionString];
+        
+        NSDictionary *localizations = dictionary[@"localizations"];
+        
+        NSDictionary *languageCodes = [self languageDictionary];
+        
+        [localizations enumerateKeysAndObjectsUsingBlock:^(NSString *language, NSDictionary *localeMetadata, BOOL *stop) {
+            NSString *localeName = MANilNullCheck(languageCodes[language]);
+            
+            if (!localeName) {
+                return;
+            }
+            
+            __block MALocale *newLocale = [[MALocale alloc] init];
+            
+            [newLocale setName:localeName];
+            [newLocale setTitle:MANilNullCheck(localeMetadata[@"local_app_name"])];
+            [newLocale setLocalDescription:MANilNullCheck(localeMetadata[@"description"])];
+            
+            //Keywords
+            NSString *keywordString = MANilNullCheck(localeMetadata[@"keywords"]);
+            NSArray *keywordArray = [keywordString componentsSeparatedByString:@","];
+            
+            [keywordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL *stop) {
+                NSString *trimmedKeyword = [keyword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                [newLocale addKeyword:trimmedKeyword];
+            }];
+            
+            [newLocale setWhatsNew:MANilNullCheck(localeMetadata[@"new_in_version"])];
+            // Ignore Software URL
+            [newLocale setPrivacyURL:MANilNullCheck(localeMetadata[@"privacy_policy_url"])];
+            [newLocale setSupportURL:MANilNullCheck(localeMetadata[@"support_url"])];
+            
+            // Screenshots
+            // make dictionary of only the screenshot arrays
+            NSArray *iPadScreenshots = MANilNullCheck(localeMetadata[@"ipad"]);
+            NSArray *iPhone35Screenshots = MANilNullCheck(localeMetadata[@"iphone_35"]);
+            NSArray *iPhone4Screenshots = MANilNullCheck(localeMetadata[@"iphone_4"]);
+            
+            NSDictionary *screenshots = @{@"ipad": iPadScreenshots,
+                                          @"iphone_35": iPhone35Screenshots,
+                                          @"iphone_4": iPhone4Screenshots,
+                                          };
+            
+            // Cycle through each screenshot and add it to the model
+            [screenshots enumerateKeysAndObjectsUsingBlock:^(NSString *screenshotType, NSArray *screenshots, BOOL *stop) {
+                [screenshots enumerateObjectsUsingBlock:^(NSDictionary *screenshotInfo, NSUInteger idx, BOOL *stop) {
+                    NSString *fileName = screenshotInfo[@"file_name"];
+                    
+                    if (!fileName) {
+                        return;
+                    }
+                    
+                    NSString *pathToScreenshot = [NSString stringWithFormat:@"%@/%@|%@", screenshotDirectory, screenshotType, fileName];
+                    
+                    MAScreenshot *screenshot = [MAScreenshot screenshotFromImageFile:[NSURL fileURLWithPath:pathToScreenshot]];
+                    [screenshot setPosition:idx + 1];
+                    
+                    [newLocale addScreenshot:screenshot];
+                }];
+            }];
+            
+            // Add the locale to the version
+            [version addLocale:newLocale];
+        }];
+        
+        //Add the version to the metadata
+        [self setVersions:@[version]];
+    }
     
     return self;
 }
@@ -262,6 +362,41 @@
     }
     
     return descriptionString;
+}
+
+#pragma mark - Language Dictionary
+
+- (NSDictionary *)languageDictionary
+{
+    return  @{@"English":@"en-US",
+              @"German":@"de-DE",
+              @"UK English":@"en-GB",
+              @"Australian English":@"en-AU",
+              @"Brazilian Portuguese":@"pt-BR",
+              @"Canadian English":@"en-CA",
+              @"Canadian French":@"fr-CA",
+              @"Danish":@"da-DK",
+              @"Dutch":@"nl-NL",
+              @"Finnish":@"fi-FI",
+              @"French":@"fr-FR",
+              @"Greek":@"el-GR",
+              @"Indonesian":@"id-ID",
+              @"Italian":@"it-IT",
+              @"Japanese":@"ja-JP",
+              @"Korean":@"ko-KR",
+              @"Latin American Spanish":@"es-MX",
+              @"Malay":@"ms-MY",
+              @"Norwegian":@"no-NO",
+              @"Portuguese":@"pt-PT",
+              @"Russian":@"ru-RU",
+              @"Simplified Chinese":@"cmn-Hans",
+              @"Spanish":@"es-ES",
+              @"Swedish":@"sv-SE",
+              @"Thai":@"th-TH",
+              @"Traditional Chinese":@"cmn-Hant",
+              @"Turkish":@"tr-TR",
+              @"Vietnamese":@"vi-VI",
+              };
 }
 
 @end

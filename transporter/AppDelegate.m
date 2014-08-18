@@ -75,7 +75,7 @@
         NSMenuItem *iTCItem = [[NSMenuItem alloc] initWithTitle:@"Metadata from iTunesConnect..." action:@selector(importFromiTunesConnect) keyEquivalent:@""];
         [importSubmenu addItem:iTCItem];
         
-        NSMenuItem *changeItem = [[NSMenuItem alloc] initWithTitle:@"Changes from Zip File..." action:@selector(importChangesFromZip) keyEquivalent:@""];
+        NSMenuItem *changeItem = [[NSMenuItem alloc] initWithTitle:@"Changes from Directory..." action:@selector(importChangesFromDirectory) keyEquivalent:@""];
         [importSubmenu addItem:changeItem];
     }
     

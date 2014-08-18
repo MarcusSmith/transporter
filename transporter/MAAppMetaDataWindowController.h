@@ -16,7 +16,7 @@
 // Import options
 - (void)importFromFile;
 - (void)importFromiTunesConnect;
-- (void)importChangesFromZip;
+- (void)importChangesFromDirectory;
 
 // Export options
 - (void)exportToFile;
