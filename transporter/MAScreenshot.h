@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const displayTargetiPhone4;
+extern NSString * const displayTargetiPhone5;
+extern NSString * const displayTargetiPad;
+
 @interface MAScreenshot : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSString *displayTarget;

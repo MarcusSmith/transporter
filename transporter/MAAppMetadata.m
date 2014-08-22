@@ -136,7 +136,7 @@ id MANilNullCheck(id object) {
                         return;
                     }
                     
-                    NSString *pathToScreenshot = [NSString stringWithFormat:@"%@/%@|%@", screenshotDirectory, screenshotType, fileName];
+                    NSString *pathToScreenshot = [NSString stringWithFormat:@"%@/%@_%@", screenshotDirectory, screenshotType, fileName];
                     
                     MAScreenshot *screenshot = [MAScreenshot screenshotFromImageFile:[NSURL fileURLWithPath:pathToScreenshot]];
                     [screenshot setPosition:idx + 1];
@@ -285,7 +285,11 @@ id MANilNullCheck(id object) {
     NSXMLElement *vendorID = [[NSXMLElement alloc] initWithName:@"vendor_id" stringValue:self.vendorID];
     [software addChild:vendorID];
     
-    //TODO: Add Apple ID?
+    NSXMLElement *readonly = [[NSXMLElement alloc] initWithName:@"read_only_info"];
+    NSXMLElement *appleID = [[NSXMLElement alloc] initWithName:@"read_only_value" stringValue:self.appleID];
+    [appleID addAttribute:[NSXMLNode attributeWithName:@"key" stringValue:@"apple-id"]];
+    [readonly addChild:appleID];
+    [software addChild:readonly];
     
     NSXMLElement *softwareMetadata = [[NSXMLElement alloc] initWithName:@"software_metadata"];
     [software addChild:softwareMetadata];

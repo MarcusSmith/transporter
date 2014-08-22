@@ -96,4 +96,16 @@ NSString * const MATransporterErrorDomain = @"MATransporter.ErrorDomain";
                                       }];
 }
 
++ (NSError *)MATransporterInvalidVersionError
+{
+    return [NSError errorWithDomain:MATransporterErrorDomain
+                               code:MATransporterErrorCodeInvalidVersion
+                           userInfo:@{
+                                      NSLocalizedDescriptionKey: NSLocalizedString(@"MATransporterErrorCodeInvalidVersionDescription", @"Version is not valid for update or doesn't exist"),
+                                      NSLocalizedRecoveryOptionsErrorKey: @[
+                                              NSLocalizedString(@"Cancel", @"Cancel Button"),
+                                              ]
+                                      }];
+}
+
 @end

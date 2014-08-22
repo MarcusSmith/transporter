@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, MATransporterErrorCode) {
     MATransporterErrorCodeProvidersDontMatch,
     MATransporterErrorCodeInvalidVendorID,
     MATransporterErrorCodeInvalidPackage,
+    MATransporterErrorCodeInvalidVersion,
 };
 
 + (NSError *)MATransporterTransporterNotInstalledError;
@@ -30,5 +31,6 @@ typedef NS_ENUM(NSInteger, MATransporterErrorCode) {
 + (NSError *)MATransporterWrongProviderError;
 + (NSError *)MATransporterInvalidVendorIDError;
 + (NSError *)MATransporterInvalidPackageError;
++ (NSError *)MATransporterInvalidVersionError;
 
 @end

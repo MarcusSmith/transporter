@@ -14,4 +14,8 @@
 @property (nonatomic, strong) MAAppMetadata *original;
 @property (nonatomic, strong) MAAppMetadata *changes;
 
+- (MAAppMetadata *)exportableMetadata;
+
+- (NSFileWrapper *)iTMSPackageFileWrapper;
+
 @end

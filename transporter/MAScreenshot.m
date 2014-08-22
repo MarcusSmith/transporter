@@ -9,9 +9,9 @@
 #import "MAScreenshot.h"
 #import "NSData+md5.h"
 
-#define displayTargetiPhone4 @"iOS-3.5-in"
-#define displayTargetiPhone5 @"iOS-4-in"
-#define displayTargetiPad    @"iOS-iPad"
+NSString * const displayTargetiPhone4 = @"iOS-3.5-in";
+NSString * const displayTargetiPhone5 = @"iOS-4-in";
+NSString * const displayTargetiPad = @"iOS-iPad";
 
 @implementation MAScreenshot
 
@@ -84,6 +84,11 @@
     [root addChild:checksum];
     
     return root;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<MAScreenshot: %@, %@, position: %lu", self.fileName, self.displayTarget, (unsigned long)self.position];
 }
 
 #pragma mark - NSCoding

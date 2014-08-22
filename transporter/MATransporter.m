@@ -8,7 +8,72 @@
 
 #import "MATransporter.h"
 
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <netinet/in.h>
+
+
+NSString * const MATransporterNotificationTransporterConnected = @"MATransporterNotificationTransporterConnected";
+NSString * const MATransporterNotificationTransporterDisconnected = @"MATransporterNotificationTransporterDisconnected";
+
+@interface MATransporter ()
+{
+    SCNetworkReachabilityRef reachabilityRef;
+    BOOL networkConnected;
+    __block BOOL networkNeedsUpdate;
+    __block BOOL networkUpdating;
+}
+
+@property (nonatomic, readwrite) BOOL isConnected;
+
+@end
+
 @implementation MATransporter
+
+static MATransporter *_sharedTransporter = nil;
++ (instancetype)sharedTransporter
+{
+    if (!_sharedTransporter) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _sharedTransporter = [[MATransporter alloc] init];
+        });
+    }
+    
+    return _sharedTransporter;
+}
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self) {
+        [self setIsConnected:NO];
+        
+        struct sockaddr_in zeroAddress;
+        bzero(&zeroAddress, sizeof(zeroAddress));
+        zeroAddress.sin_len = sizeof(zeroAddress);
+        zeroAddress.sin_family = AF_INET;
+        
+        reachabilityRef = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)&zeroAddress);
+        
+        networkConnected = NO;
+        networkNeedsUpdate = YES;
+        networkUpdating = NO;
+        
+        [self startNotifier];
+        
+        [self updateIsConnected];
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [self stopNotifer];
+    
+    CFRelease(reachabilityRef);
+}
 
 static NSString *iTMSTransporterPath(void)
 {
@@ -27,7 +92,94 @@ static NSString *iTMSTransporterPath(void)
     return (iTMSTransporterPath() != nil);
 }
 
-+ (void)launchTransporterWithArguments:(NSArray *)arguments info:(NSDictionary *)info completion:(MATransporterCompletion)completion
+- (void)transporterConnected
+{
+    if (self.sendsConnectionNotifications) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MATransporterNotificationTransporterConnected object:self];
+    }
+}
+
+- (void)transporterDisconnected
+{
+    if (self.sendsConnectionNotifications) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MATransporterNotificationTransporterDisconnected object:self];
+    }
+}
+
+- (void)updateIsConnected
+{
+    // Make these checks fire one at a time, so a timeout check doesn't happen after a successful connection check
+    if (networkUpdating) {
+        networkNeedsUpdate = YES;
+        return;
+    }
+    
+    networkUpdating = YES;
+    networkNeedsUpdate = NO;
+    
+    __weak MATransporter *weakSelf = self;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, (unsigned long)NULL), ^{
+        BOOL connected = [weakSelf checkIfConnected];
+        
+        // Update only needed if there was a change
+        if (connected != weakSelf.isConnected) {
+            [weakSelf setIsConnected:connected];
+            
+            // Call notification methods
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (weakSelf.isConnected) {
+                    [weakSelf transporterConnected];
+                }
+                else {
+                    [weakSelf transporterDisconnected];
+                }
+            });
+        }
+        
+        networkUpdating = NO;
+        
+        if (networkNeedsUpdate) {
+            [weakSelf updateIsConnected];
+        }
+    });
+}
+
+- (BOOL)checkIfConnected
+{
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath:iTMSTransporterPath()];
+        [task setArguments:@[@"-m", @"diagnostic"]];
+        
+        NSPipe *pipe = [NSPipe pipe];
+        [task setStandardOutput: pipe];
+        [task setStandardInput:[NSPipe pipe]];
+        
+        NSPipe *errorPipe = [NSPipe pipe];
+        [task setStandardError:errorPipe];
+        
+        NSFileHandle *file;
+        file = [pipe fileHandleForReading];
+        
+        NSFileHandle *errorFile;
+        errorFile = [errorPipe fileHandleForReading];
+        
+        [task launch];
+        
+        NSData *data;
+        data = [file readDataToEndOfFile];
+        NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        BOOL connected = NO;
+        
+        if ([dataString rangeOfString:@"The web service test succeeded." options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            connected = YES;
+        }
+    
+    return connected;
+}
+
+- (void)launchTransporterWithArguments:(NSArray *)arguments info:(NSDictionary *)info completion:(MATransporterCompletion)completion
 {
     // TODO: Show Loading indicator
     
@@ -111,6 +263,9 @@ static NSString *iTMSTransporterPath(void)
             else if ([errorString rangeOfString:@"No software found with vendor_id"].location != NSNotFound) {
                 error = [NSError MATransporterInvalidVendorIDError];
             }
+            else if ([errorString rangeOfString:@"ERROR ITMS-4157"].location != NSNotFound) {
+                error = [NSError MATransporterInvalidVersionError];
+            }
             // More else if error checks to go here later
             else {
                 error = [NSError errorWithDomain:MATransporterErrorDomain code:0 userInfo:@{@"NSLocalizedDescription":errorString}];
@@ -125,7 +280,7 @@ static NSString *iTMSTransporterPath(void)
     });
 }
 
-+ (void)retrieveMetadataForAccount:(MAiTunesConnectAccount *)account appleID:(NSString *)appleID toDirectory:(NSString *)directoryPath completion:(MATransporterCompletion)completion
+- (void)retrieveMetadataForAccount:(MAiTunesConnectAccount *)account appleID:(NSString *)appleID toDirectory:(NSString *)directoryPath completion:(MATransporterCompletion)completion
 {
     NSDictionary *info = @{@"account": account,
                            @"packagePath": [NSString stringWithFormat:@"%@/%@.itmsp", directoryPath, appleID],
@@ -143,7 +298,7 @@ static NSString *iTMSTransporterPath(void)
     [self launchTransporterWithArguments:taskArray info:info completion:completion];
 }
 
-+ (void)retrieveMetadataForAccount:(MAiTunesConnectAccount *)account SKU:(NSString *)sku toDirectory:(NSString *)directoryPath completion:(MATransporterCompletion)completion
+- (void)retrieveMetadataForAccount:(MAiTunesConnectAccount *)account SKU:(NSString *)sku toDirectory:(NSString *)directoryPath completion:(MATransporterCompletion)completion
 {
     NSDictionary *info = @{@"account": account,
                            @"packagePath": [NSString stringWithFormat:@"%@/%@.itmsp", directoryPath, sku],
@@ -161,7 +316,7 @@ static NSString *iTMSTransporterPath(void)
     [self launchTransporterWithArguments:taskArray info:info completion:completion];
 }
 
-+ (void)verifyPackage:(NSString *)packagePath forAccount:(MAiTunesConnectAccount *)account completion:(MATransporterCompletion)completion
+- (void)verifyPackage:(NSString *)packagePath forAccount:(MAiTunesConnectAccount *)account completion:(MATransporterCompletion)completion
 {
     NSDictionary *info = @{@"account": account,
                            @"packagePath": packagePath,
@@ -179,7 +334,7 @@ static NSString *iTMSTransporterPath(void)
     [self launchTransporterWithArguments:taskArray info:info completion:completion];
 }
 
-+ (void)uploadPackage:(NSString *)packagePath forAccount:(MAiTunesConnectAccount *)account completion:(MATransporterCompletion)completion
+- (void)uploadPackage:(NSString *)packagePath forAccount:(MAiTunesConnectAccount *)account completion:(MATransporterCompletion)completion
 {
     NSDictionary *info = @{@"account": account,
                            @"packagePath": packagePath,
@@ -196,5 +351,33 @@ static NSString *iTMSTransporterPath(void)
     
     [self launchTransporterWithArguments:taskArray info:info completion:completion];
 }
+
+#pragma mark - Reachability
+
+// This is called when the network status may have changed
+static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *context) {
+    // Network changed in some way, call updateIsConnected
+	[(__bridge MATransporter *)context updateIsConnected];
+}
+
+// Add reachability ref to run loop to check for network changes
+- (BOOL) startNotifier
+{
+	SCNetworkReachabilityContext context = { 0, (__bridge void *)(self), NULL, NULL, NULL };
+	if (SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context)) {
+        return SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    }
+    
+	return NO;
+}
+
+// Remove reachability ref from run loop
+- (void) stopNotifer {
+	if (reachabilityRef) {
+       SCNetworkReachabilityUnscheduleFromRunLoop(reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    }
+}
+
+
 
 @end

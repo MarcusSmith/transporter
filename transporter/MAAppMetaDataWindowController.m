@@ -24,6 +24,8 @@
 #import "MATransporter.h"
 #import "MAAccountManager.h"
 
+#define kTempExportPackagePath @"/tmp/export.itmsp"
+
 @interface MAAppMetaDataWindowController ()<NSWindowDelegate>
 
 @property (nonatomic, strong, readonly) MAAppMetadataDocument *metaDataDocument;
@@ -260,7 +262,7 @@
     
     NSLog(@"Account: %@, AppleID: %@", username, appleID);
     
-    [MATransporter retrieveMetadataForAccount:[MAAccountManager accountWithUsername:username] appleID:appleID toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
+    [[MATransporter sharedTransporter] retrieveMetadataForAccount:[MAAccountManager accountWithUsername:username] appleID:appleID toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
         NSLog(@"Info Dict: %@", info);
         if (success) {
             NSString *packagePath = info[@"packagePath"];
@@ -372,17 +374,168 @@
 
 - (void)exportToFile
 {
-    NSLog(@"%@", self.metaDataDocument);
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+
+    [savePanel setTitle:@"Export package as:"];
+
+    NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"itmsp", @"ITMSP", nil];
+    [savePanel setAllowedFileTypes:fileTypes];
+    [savePanel setAllowsOtherFileTypes:NO];
+
+    NSInteger button = [savePanel runModal];
+    if (button == NSFileHandlingPanelOKButton){
+        NSURL *saveURL = [[savePanel directoryURL] URLByAppendingPathComponent:[savePanel nameFieldStringValue]];
+        if ([saveURL.pathExtension isCaseInsensitiveLike:@"itmsp"]) {
+            NSLog(@"Valid extension");
+        }
+        else {
+            NSLog(@"Invalid extension, adding .matp");
+            saveURL = [saveURL URLByAppendingPathExtension:@"itmsp"];
+        }
+
+//        NSLog(@"Should save as:%@", saveURL.path);
+        
+        NSFileWrapper *exportWrapper = [self.metaDataDocument iTMSPackageFileWrapper];
+        
+        [exportWrapper setPreferredFilename:[saveURL lastPathComponent]];
+        
+        NSError *writeError;
+        
+        BOOL success = [exportWrapper writeToURL:saveURL options:NSFileWrapperWritingAtomic originalContentsURL:nil error:&writeError];
+        
+        NSLog(@"%@", success ? @"Package export successful" : [NSString stringWithFormat:@"Package export unsuccessful with error: %@", writeError]);
+    }
+}
+
+- (BOOL)exportPackageToTempLocationWithError:(NSError **)error
+{
+    NSFileWrapper *exportWrapper = [self.metaDataDocument iTMSPackageFileWrapper];
+    
+    [exportWrapper setPreferredFilename:@"export.itmsp"];
+    
+    BOOL success = [exportWrapper writeToURL:[NSURL fileURLWithPath:kTempExportPackagePath] options:NSFileWrapperWritingAtomic originalContentsURL:nil error:error];
+    
+    NSLog(@"%@", success ? @"Package export to tmp successful" : [NSString stringWithFormat:@"Package export to tmp unsuccessful with error: %@", *error]);
+    
+    return success;
+}
+
+- (BOOL)deleteTempPackageWithError:(NSError **)error
+{
+    return [[NSFileManager defaultManager] removeItemAtPath:kTempExportPackagePath error:error];
 }
 
 - (void)verifyWithiTunesConnect
 {
+    NSError *exportError;
     
+    [self exportPackageToTempLocationWithError:&exportError];
+    
+    if (exportError) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"Error exporting itms package"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"%@", exportError];
+        
+        [alert runModal];
+        return;
+    }
+    
+    MAiTunesConnectAccount *matchingAccount = [MAAccountManager accountWithProviderName:self.metaDataDocument.original.provider];
+    
+    if (!matchingAccount) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"No accounts matching app's provider name"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"provider name: %@", self.metaDataDocument.original.provider];
+        
+        [alert runModal];
+        return;
+    }
+    
+    [[MATransporter sharedTransporter] verifyPackage:kTempExportPackagePath forAccount:matchingAccount completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        if (!success) {
+            NSAlert *alert = [NSAlert alertWithMessageText: @"iTMS Error"
+                                             defaultButton:@"OK"
+                                           alternateButton:nil
+                                               otherButton:nil
+                                 informativeTextWithFormat:@""];
+            
+            NSLog(@"%@", error);
+            
+            [alert runModal];
+        }
+        else {
+            NSAlert *alert = [NSAlert alertWithMessageText: @"Package validation successful"
+                                             defaultButton:@"OK"
+                                           alternateButton:nil
+                                               otherButton:nil
+                                 informativeTextWithFormat:@""];
+            
+            [alert runModal];
+        }
+        
+        [self deleteTempPackageWithError:nil];
+    }];
 }
 
 - (void)submitToiTunesConnect
 {
+    NSError *exportError;
     
+    [self exportPackageToTempLocationWithError:&exportError];
+    
+    if (exportError) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"Error exporting itms package"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"%@", exportError];
+        
+        [alert runModal];
+        return;
+    }
+    
+    MAiTunesConnectAccount *matchingAccount = [MAAccountManager accountWithProviderName:self.metaDataDocument.original.provider];
+    
+    if (!matchingAccount) {
+        NSAlert *alert = [NSAlert alertWithMessageText: @"No accounts matching app's provider name"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"provider name: %@", self.metaDataDocument.original.provider];
+        
+        [alert runModal];
+        return;
+    }
+    
+    [[MATransporter sharedTransporter] uploadPackage:kTempExportPackagePath forAccount:matchingAccount completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        if (!success) {
+            NSAlert *alert = [NSAlert alertWithMessageText: @"iTMS Error"
+                                             defaultButton:@"OK"
+                                           alternateButton:nil
+                                               otherButton:nil
+                                 informativeTextWithFormat:@""];
+            
+            NSLog(@"%@", error);
+            
+            [alert runModal];
+
+        }
+        else {
+            NSAlert *alert = [NSAlert alertWithMessageText: @"Package submission successful"
+                                             defaultButton:@"OK"
+                                           alternateButton:nil
+                                               otherButton:nil
+                                 informativeTextWithFormat:@""];
+            
+            [alert runModal];
+        }
+        
+        [self deleteTempPackageWithError:nil];
+    }];
 }
 
 #pragma mark - Accessors

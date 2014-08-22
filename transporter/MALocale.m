@@ -15,27 +15,27 @@
     self.screenshots = [self.screenshots arrayByAddingObject:screenshot];
 }
 
+- (void)removeScreenshot:(MAScreenshot *)screenshot
+{
+    NSMutableArray *mutableScreenshots = self.screenshots.mutableCopy;
+    
+    [mutableScreenshots removeObject:screenshot];
+    
+    self.screenshots = mutableScreenshots.copy;
+}
+
 - (void)addKeyword:(NSString *)keyword
 {
     self.keywords = [self.keywords arrayByAddingObject:keyword];
 }
 
-- (NSArray *)keywords
+- (void)removeKeyword:(NSString *)keyword
 {
-    if (!_keywords) {
-        _keywords = [NSArray array];
-    }
+    NSMutableArray *mutableKeywords = self.keywords.mutableCopy;
     
-    return _keywords;
-}
-
-- (NSArray *)screenshots
-{
-    if (!_screenshots) {
-        _screenshots = [NSArray array];
-    }
+    [mutableKeywords removeObject:keyword];
     
-    return _screenshots;
+    self.keywords = mutableKeywords.copy;
 }
 
 - (NSXMLElement *)NSXMLElementRepresentation
@@ -100,6 +100,68 @@
     }
     
     return root;
+}
+
+#pragma mark - ordered screenshots
+
+- (NSArray *)orderedArrayOfScreenshotsForTarget:(NSString *)displayTarget
+{
+    NSMutableArray *screenshotsForTarget = [NSMutableArray array];
+    
+    [self.screenshots enumerateObjectsUsingBlock:^(MAScreenshot *screenshot, NSUInteger idx, BOOL *stop) {
+        if ([screenshot.displayTarget isEqualToString:displayTarget]) {
+            [screenshotsForTarget addObject:screenshot];
+        }
+    }];
+    
+    NSArray *returnArray = [screenshotsForTarget sortedArrayUsingComparator:^NSComparisonResult(MAScreenshot *screenshot1, MAScreenshot *screenshot2) {
+        if (screenshot1.position < screenshot2.position) {
+            return (NSComparisonResult)NSOrderedAscending;
+        } else if (screenshot1.position > screenshot2.position) {
+            return (NSComparisonResult)NSOrderedDescending;
+        } else {
+            NSLog(@"Two screenshots have the same position, that's definitely not good");
+            // Should I do something about it, or just ignore it and hope for the best?
+            return (NSComparisonResult)NSOrderedSame;
+        }
+    }];
+    
+    return returnArray;
+}
+
+- (NSArray *)iPhone4Screenshots
+{
+    return [self orderedArrayOfScreenshotsForTarget:displayTargetiPhone4];
+}
+
+- (NSArray *)iPhone5Screenshots
+{
+    return [self orderedArrayOfScreenshotsForTarget:displayTargetiPhone5];
+}
+
+- (NSArray *)iPadScreenshots
+{
+    return [self orderedArrayOfScreenshotsForTarget:displayTargetiPad];
+}
+
+#pragma mark - properties
+
+- (NSArray *)keywords
+{
+    if (!_keywords) {
+        _keywords = [NSArray array];
+    }
+    
+    return _keywords;
+}
+
+- (NSArray *)screenshots
+{
+    if (!_screenshots) {
+        _screenshots = [NSArray array];
+    }
+    
+    return _screenshots;
 }
 
 #pragma mark - NSCoding

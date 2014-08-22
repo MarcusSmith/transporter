@@ -16,20 +16,24 @@
 #import "MAHidingMenu.h"
 
 @interface AppDelegate ()
+{
+    NSStatusItem *statusItem;
+}
 
 @property (nonatomic, strong) NSDocumentController *documentController;
 @property (nonatomic, strong) MAHidingMenu *importMenu;
 @property (nonatomic, strong) MAHidingMenu *exportMenu;
+@property (nonatomic, strong) NSMenu *statusDropdownMenu;
 
 @property (nonatomic, strong) NSMenuItem *testMenu;
+
+@property (nonatomic, readwrite) BOOL transporterIsConnected;
 
 @end
 
 @implementation AppDelegate
 
 @dynamic documentController;
-
-
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification
 {
@@ -38,6 +42,8 @@
 
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {
+    
+    // Add import and export menus to the File menu
     NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
     
     NSMenu *fileMenu = [[mainMenu itemAtIndex:1] submenu];
@@ -51,7 +57,28 @@
 //
 //    [fileMenu removeItemAtIndex:1];
     
+    // Add test menu
     [mainMenu insertItem:self.testMenu atIndex:2];
+    
+    // Set up notifications from transporter
+    [[MATransporter sharedTransporter] setSendsConnectionNotifications:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(transporterConnected) name:MATransporterNotificationTransporterConnected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(transporterDisconnected) name:MATransporterNotificationTransporterDisconnected object:nil];
+    
+    // Set up connection icon in status bar
+    statusItem = [[NSStatusBar systemStatusBar]
+                   statusItemWithLength:NSSquareStatusItemLength];
+    [statusItem setImage:[NSImage imageNamed:@"blackT"]];
+    [statusItem setEnabled:NO];
+    [statusItem setAction:@selector(updateTransporterConnection)];
+
+    self.transporterIsConnected = [[MATransporter sharedTransporter] isConnected];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Accessors
@@ -102,7 +129,45 @@
     return _exportMenu;
 }
 
+- (NSMenu *)statusDropdownMenu
+{
+    if (!_statusDropdownMenu) {
+        _statusDropdownMenu = [[NSMenu alloc] init];
+    }
+    
+    return _statusDropdownMenu;
+}
 
+#pragma mark - connection
+
+- (void)transporterConnected
+{
+    NSLog(@"transporter connected method called");
+    [self setTransporterIsConnected:YES];
+}
+
+- (void)transporterDisconnected
+{
+    NSLog(@"transporter disconnected method called");
+    [self setTransporterIsConnected:NO];
+}
+
+- (void)setTransporterIsConnected:(BOOL)transporterIsConnected
+{
+    _transporterIsConnected = transporterIsConnected;
+    
+    if (transporterIsConnected) {
+        [statusItem setEnabled:YES];
+    }
+    else {
+        [statusItem setEnabled:NO];
+    }
+}
+
+- (void)updateTransporterConnection
+{
+    [[MATransporter sharedTransporter] updateIsConnected];
+}
 
 #pragma mark - Marcus tests
 
@@ -319,7 +384,7 @@
     
     NSLog(@"Account: %@, AppleID: %@", username, appleID);
     
-    [MATransporter retrieveMetadataForAccount:[MAAccountManager accountWithUsername:username] appleID:appleID toDirectory:[@"~/Desktop" stringByExpandingTildeInPath] completion:^(BOOL success, NSDictionary *info, NSError *error) {
+    [[MATransporter sharedTransporter] retrieveMetadataForAccount:[MAAccountManager accountWithUsername:username] appleID:appleID toDirectory:[@"~/Desktop" stringByExpandingTildeInPath] completion:^(BOOL success, NSDictionary *info, NSError *error) {
         NSLog(@"Info Dict: %@", info);
         if (success) {
             // If there was a package successfully downloaded and the account doesn't have a provider, get the provider from the package and add it to the account
@@ -378,7 +443,7 @@
         NSURL *chosenURL = [[dlg URLs] objectAtIndex:0];
         NSString *packagePath = [chosenURL path];
         
-        [MATransporter verifyPackage:packagePath forAccount:account completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        [[MATransporter sharedTransporter] verifyPackage:packagePath forAccount:account completion:^(BOOL success, NSDictionary *info, NSError *error) {
             if (success) {
                 NSLog(@"Success! Info:\n%@", info);
             }
@@ -430,7 +495,7 @@
         NSURL *chosenURL = [[dlg URLs] objectAtIndex:0];
         NSString *packagePath = [chosenURL path];
         
-        [MATransporter uploadPackage:packagePath forAccount:account completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        [[MATransporter sharedTransporter] uploadPackage:packagePath forAccount:account completion:^(BOOL success, NSDictionary *info, NSError *error) {
             if (success) {
                 NSLog(@"Success! Info:\n%@", info);
             }

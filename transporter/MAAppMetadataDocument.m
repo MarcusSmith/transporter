@@ -121,6 +121,70 @@
     return YES;
 }
 
+#pragma mark - exporting
+
+- (MAAppMetadata *)exportableMetadata
+{
+    MAAppMetadata *exportableMetadata = [[MAAppMetadata alloc] init];
+    
+    [exportableMetadata setPackageDictionary:self.original.packageDictionary];
+    [exportableMetadata setProvider:self.original.provider];
+    [exportableMetadata setTeamID:self.original.teamID];
+    [exportableMetadata setVendorID:self.original.vendorID];
+    [exportableMetadata setAppleID:self.original.appleID];
+    [exportableMetadata setVersions:self.changes.versions];
+    
+    return exportableMetadata;
+}
+
+- (NSFileWrapper *)iTMSPackageFileWrapper
+{
+    // Set up iTMS package file wrapper
+    __block NSFileWrapper *iTMSWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+    
+    // Convert metadata into metadata.xml file wrapper
+    MAAppMetadata *metadata = [self exportableMetadata];
+    NSXMLDocument *metadataDocument = [metadata NSXMLDocumentRepresentation];
+    NSData *xmlData = [metadataDocument XMLDataWithOptions:NSXMLNodePrettyPrint];
+    NSFileWrapper *metadataWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:xmlData];
+    [metadataWrapper setPreferredFilename:@"metadata.xml"];
+    
+    // Add metadata file wrapper to the iTMS Package file wrapper
+    [iTMSWrapper addFileWrapper:metadataWrapper];
+    
+    NSMutableSet *screenshotNames = [NSMutableSet set];
+    
+    // Cycle through all of the screenshots, make a filewrapper for the screenshot, and add it to the ITMS wrapper
+    [metadata.versions enumerateObjectsUsingBlock:^(MAVersion *version, NSUInteger idx, BOOL *stop) {
+        [version.locales enumerateObjectsUsingBlock:^(MALocale *locale, NSUInteger idx, BOOL *stop) {
+            [locale.screenshots enumerateObjectsUsingBlock:^(MAScreenshot *screenshot, NSUInteger idx, BOOL *stop) {
+                NSURL *screenshotURL = screenshot.fileURL;
+                NSData *screenshotData = [[NSFileManager defaultManager] contentsAtPath:screenshotURL.path];
+                
+                NSString *screenshotName = screenshot.fileName;
+                
+                // If the same screenshot is already being used, don't copy it over
+                if ([screenshotNames containsObject:screenshotName]) {
+                    return;
+                }
+                
+                [screenshotNames addObject:screenshotName];
+                
+                if (!screenshotData || !screenshotName) {
+                    return;
+                }
+                
+                NSFileWrapper *screenshotWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:screenshotData];
+                [screenshotWrapper setPreferredFilename:screenshotName];
+                
+                [iTMSWrapper addFileWrapper:screenshotWrapper];
+            }];
+        }];
+    }];
+    
+    return iTMSWrapper;
+}
+
 #pragma mark - properties
 
 - (void)setOriginal:(MAAppMetadata *)original
@@ -128,6 +192,7 @@
     _original = original;
     
     if (!self.changes) {
+        NSLog(@"Copying original over to changes");
         [self setChanges:original.copy];
     }
 }

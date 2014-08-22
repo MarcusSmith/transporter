@@ -22,7 +22,15 @@
 @property (nonatomic, strong) NSArray *screenshots; // Should be an array of screenshots only
 
 - (void)addKeyword:(NSString *)keyword;
+- (void)removeKeyword:(NSString *)keyword;
+
 - (void)addScreenshot:(MAScreenshot *)screenshot;
+- (void)removeScreenshot:(MAScreenshot *)screenshot;
+
 - (NSXMLElement *)NSXMLElementRepresentation;
+
+- (NSArray *)iPhone4Screenshots;
+- (NSArray *)iPhone5Screenshots;
+- (NSArray *)iPadScreenshots;
 
 @end

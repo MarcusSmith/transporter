@@ -27,6 +27,7 @@
 		41F98BCB199E5CEC00C10B9B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F98BC2199E5CEC00C10B9B /* AFURLSessionManager.m */; };
 		4519B9F11982EF7B00D30FC9 /* MAVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519B9F01982EF7B00D30FC9 /* MAVersion.m */; };
 		451C3A3C199BC46C002F20E5 /* MAHidingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 451C3A3B199BC46C002F20E5 /* MAHidingMenu.m */; };
+		452515F019A68A9000852996 /* blackT.png in Resources */ = {isa = PBXBuildFile; fileRef = 452515EE19A68A9000852996 /* blackT.png */; };
 		452B40BA19954759002F3029 /* NSError+MATransporterErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 452B40B919954759002F3029 /* NSError+MATransporterErrors.m */; };
 		4533A05F1982A08E0082C746 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A05E1982A08E0082C746 /* MainViewController.m */; };
 		454BF4A9199110DB00D2A1F4 /* MATransporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 454BF4A8199110DB00D2A1F4 /* MATransporter.m */; };
@@ -104,6 +105,7 @@
 		4519B9F01982EF7B00D30FC9 /* MAVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVersion.m; sourceTree = "<group>"; };
 		451C3A3A199BC46C002F20E5 /* MAHidingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAHidingMenu.h; sourceTree = "<group>"; };
 		451C3A3B199BC46C002F20E5 /* MAHidingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAHidingMenu.m; sourceTree = "<group>"; };
+		452515EE19A68A9000852996 /* blackT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackT.png; path = ../blackT.png; sourceTree = "<group>"; };
 		452B40B819954759002F3029 /* NSError+MATransporterErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+MATransporterErrors.h"; sourceTree = "<group>"; };
 		452B40B919954759002F3029 /* NSError+MATransporterErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+MATransporterErrors.m"; sourceTree = "<group>"; };
 		4533A05D1982A08E0082C746 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		458AAA5119706F2D001A2AA1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				452515EE19A68A9000852996 /* blackT.png */,
 				410F73B619902AD0007E8958 /* transporter-Info.plist */,
 				458AAA5319706F2D001A2AA1 /* InfoPlist.strings */,
 				458AAA5619706F2D001A2AA1 /* main.m */,
@@ -461,6 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				452515F019A68A9000852996 /* blackT.png in Resources */,
 				458AAA5519706F2D001A2AA1 /* InfoPlist.strings in Resources */,
 				458AAA6319706F2D001A2AA1 /* Images.xcassets in Resources */,
 				458AAA5B19706F2D001A2AA1 /* Credits.rtf in Resources */,

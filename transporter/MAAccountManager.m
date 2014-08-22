@@ -113,7 +113,7 @@ static NSString *iTunesConnectKey = @"iTunesConnectAccounts";
     
     // TODO: If account doesn't have provider name, pull iTMS package for first SKU, and get provider name from metadata
     if (!account.providerName && account.AppleIDList.count > 0) {
-        [MATransporter retrieveMetadataForAccount:account appleID:account.AppleIDList[0] toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
+        [[MATransporter sharedTransporter] retrieveMetadataForAccount:account appleID:account.AppleIDList[0] toDirectory:@"/tmp/" completion:^(BOOL success, NSDictionary *info, NSError *error) {
             if (success) {
                 NSString *packagePath = info[@"packagePath"];
                 NSURL *xmlURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/metadata.xml", packagePath]];
