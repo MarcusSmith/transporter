@@ -9,7 +9,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>itmsp</string>
+				<string>matp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ConnectorFileIcon</string>

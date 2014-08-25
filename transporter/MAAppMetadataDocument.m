@@ -54,55 +54,16 @@
 {
     // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
     // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    
+    if (data) {
+        return data;
+    }
+    
     if (outError) {
         *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:nil];
     }
     return nil;
-}
-
-//- (void)saveDocumentWithDelegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo
-//{
-//    NSSavePanel *savePanel = [NSSavePanel savePanel];
-//    
-//    [savePanel setTitle:@"Save changes as:"];
-//    
-//    NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"matp", @"MATP", nil];
-//    [savePanel setAllowedFileTypes:fileTypes];
-//    [savePanel setAllowsOtherFileTypes:NO];
-//    
-//    NSInteger button = [savePanel runModal];
-//    if (button == NSFileHandlingPanelOKButton){
-//        NSURL *saveURL = [[savePanel directoryURL] URLByAppendingPathComponent:[savePanel nameFieldStringValue]];
-//        if ([saveURL.pathExtension isCaseInsensitiveLike:@"matp"]) {
-//            NSLog(@"Valid extension");
-//        }
-//        else {
-//            NSLog(@"Invalid extension, adding .matp");
-//            saveURL = [saveURL URLByAppendingPathExtension:@"matp"];
-//        }
-//        
-//        NSLog(@"Should save as:%@", saveURL.path);
-//        
-//        //TODO: DO THIS!!
-//    }
-//}
-
-- (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
-{
-    if (fileWrapper.isDirectory) {
-        [fileWrapper.fileWrappers enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSFileWrapper *wrapper, BOOL *stop) {
-            if (wrapper.isRegularFile && [wrapper.preferredFilename hasSuffix:@"xml"]) {
-                self.original = [[MAAppMetadata alloc] initWithXMLData:wrapper.regularFileContents];
-                if (self.original) {
-                    *stop = YES;
-                }
-            }
-        }];
-        
-        return (self.original) ? YES : NO;
-    }
-    
-    return NO;
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
@@ -110,10 +71,22 @@
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:nil];
+    MAAppMetadataDocument *loadedDocument = (MAAppMetadataDocument *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    if (loadedDocument) {
+        
+        [self setOriginal:loadedDocument.original];
+        [self setChanges:loadedDocument.changes];
+        
+        return YES;
     }
-    return YES;
+    else {
+        if (outError) {
+            *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:nil];
+        }
+        
+        return NO;
+    }
 }
 
 + (BOOL)autosavesInPlace
@@ -192,7 +165,6 @@
     _original = original;
     
     if (!self.changes) {
-        NSLog(@"Copying original over to changes");
         [self setChanges:original.copy];
     }
 }
